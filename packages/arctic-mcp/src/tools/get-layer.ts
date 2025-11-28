@@ -1,6 +1,6 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
-import { layers, projects } from '../data/index.js';
+import { getLayers, getLayerByName } from '../data/loader.js';
 
 export function registerGetLayer(server: McpServer): void {
   server.tool(
@@ -10,9 +10,10 @@ export function registerGetLayer(server: McpServer): void {
       name: z.string().describe('Layer name: foundation, domain, apps, agents, java, or web'),
     },
     async ({ name }) => {
-      const layer = layers.find((l) => l.name.toLowerCase() === name.toLowerCase());
+      const layer = getLayerByName(name);
 
       if (!layer) {
+        const layers = getLayers();
         return {
           content: [
             {
@@ -26,9 +27,6 @@ export function registerGetLayer(server: McpServer): void {
         };
       }
 
-      // Get detailed project info for this layer
-      const layerProjects = projects.filter((p) => p.layer === layer.name);
-
       return {
         content: [
           {
@@ -39,9 +37,9 @@ export function registerGetLayer(server: McpServer): void {
                 description: layer.description,
                 technology: layer.technology,
                 path: layer.path,
+                dependsOn: layer.dependsOn,
               },
               projects: layer.projects,
-              detailedProjects: layerProjects,
               usage: 'Use get_project(name) for specific project details',
             }, null, 2),
           },

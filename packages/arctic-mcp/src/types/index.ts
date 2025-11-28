@@ -7,6 +7,7 @@ export interface Layer {
   technology: string;
   path: string;
   projects: string[];
+  dependsOn?: string[];
 }
 
 /**

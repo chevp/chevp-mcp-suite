@@ -1,40 +1,20 @@
 import type { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { z } from 'zod';
-import { projects, layers } from '../data/index.js';
+import { getLayers, searchProjects } from '../data/loader.js';
 
 export function registerSearchProjects(server: McpServer): void {
   server.tool(
     'search_projects',
-    'Search for projects in Arctic Workspace by keyword (searches name, description, and technology)',
+    'Search for projects in Arctic Workspace by keyword (searches name and layer)',
     {
       query: z.string().describe('Search query keyword'),
     },
     async ({ query }) => {
       const queryLower = query.toLowerCase();
+      const layers = getLayers();
 
-      // Search in detailed projects
-      const matchedProjects = projects.filter(
-        (p) =>
-          p.name.toLowerCase().includes(queryLower) ||
-          p.description.toLowerCase().includes(queryLower) ||
-          p.technology.toLowerCase().includes(queryLower) ||
-          p.layer.toLowerCase().includes(queryLower)
-      );
-
-      // Also search in layer project lists
-      const additionalMatches: Array<{ name: string; layer: string }> = [];
-      const matchedNames = new Set(matchedProjects.map((p) => p.name));
-
-      for (const layer of layers) {
-        for (const projectName of layer.projects) {
-          if (
-            !matchedNames.has(projectName) &&
-            projectName.toLowerCase().includes(queryLower)
-          ) {
-            additionalMatches.push({ name: projectName, layer: layer.name });
-          }
-        }
-      }
+      // Search projects across layers
+      const matchedProjects = searchProjects(query);
 
       // Search in layers themselves
       const matchedLayers = layers.filter(
@@ -51,22 +31,13 @@ export function registerSearchProjects(server: McpServer): void {
             text: JSON.stringify({
               query,
               results: {
-                projects: matchedProjects.map((p) => ({
-                  name: p.name,
-                  description: p.description,
-                  layer: p.layer,
-                  technology: p.technology,
-                })),
-                additionalProjects: additionalMatches,
+                projects: matchedProjects,
                 layers: matchedLayers.map((l) => ({
                   name: l.name,
                   description: l.description,
                 })),
               },
-              totalMatches:
-                matchedProjects.length +
-                additionalMatches.length +
-                matchedLayers.length,
+              totalMatches: matchedProjects.length + matchedLayers.length,
             }, null, 2),
           },
         ],

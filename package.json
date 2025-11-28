@@ -1,0 +1,22 @@
+{
+  "name": "@mcp-suite/source",
+  "version": "1.0.0",
+  "private": true,
+  "description": "MCP Server Suite for chevp workspace",
+  "type": "module",
+  "scripts": {
+    "build": "nx run-many -t build",
+    "build:affected": "nx affected -t build",
+    "dev": "nx run-many -t dev",
+    "lint": "nx run-many -t lint",
+    "test": "nx run-many -t test"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "nx": "^20.0.0",
+    "typescript": "^5.4.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "cryo-protocol-mcp",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/cryo-protocol-mcp/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["^build"],
+      "options": {
+        "command": "tsc",
+        "cwd": "packages/cryo-protocol-mcp"
+      },
+      "outputs": ["{projectRoot}/dist"]
+    },
+    "start": {
+      "executor": "nx:run-commands",
+      "dependsOn": ["build"],
+      "options": {
+        "command": "node dist/stdio.js",
+        "cwd": "packages/cryo-protocol-mcp"
+      }
+    },
+    "dev": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc --watch",
+        "cwd": "packages/cryo-protocol-mcp"
+      }
+    }
+  }
+}

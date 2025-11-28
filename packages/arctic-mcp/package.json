@@ -1,0 +1,21 @@
+{
+  "name": "@mcp-suite/arctic",
+  "version": "1.0.0",
+  "description": "MCP server for Arctic Workspace architecture and build system",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/stdio.js",
+    "dev": "tsc --watch"
+  },
+  "dependencies": {
+    
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "zod": "^3.23.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0"
+  }
+}

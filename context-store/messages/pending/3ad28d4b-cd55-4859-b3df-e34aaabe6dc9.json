@@ -1,0 +1,25 @@
+{
+  "type": "request",
+  "from": "ceo",
+  "to": "cto",
+  "priority": "high",
+  "payload": {
+    "action": "provide_executive_summary",
+    "parameters": {
+      "topics": [
+        "technical_debt",
+        "sprint_progress",
+        "architecture_status",
+        "team_capacity",
+        "blockers"
+      ],
+      "format": "structured"
+    },
+    "reason": "CEO executive summary request"
+  },
+  "requiresResponse": true,
+  "deadline": "2025-12-02T12:00:00Z",
+  "id": "3ad28d4b-cd55-4859-b3df-e34aaabe6dc9",
+  "timestamp": "2025-11-29T00:02:43.856Z",
+  "status": "pending"
+}

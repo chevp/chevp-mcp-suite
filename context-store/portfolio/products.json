@@ -1,0 +1,86 @@
+{
+  "$schema": "./products.schema.json",
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-28T00:00:00Z",
+  "products": {
+    "coregfx": {
+      "name": "CoreGFX",
+      "description": "Cross-platform graphics rendering framework",
+      "owner": "coregfx-po",
+      "architect": "coregfx-architect",
+      "analyst": "coregfx-ba",
+      "status": "active",
+      "repositoryCount": 7,
+      "primaryLanguages": ["C++", "GLSL", "HLSL"],
+      "backends": ["Vulkan", "DirectX 12", "Metal"],
+      "roadmapLink": "./coregfx-roadmap.json"
+    },
+    "cryo": {
+      "name": "Cryo",
+      "description": "High-performance serialization and asset pipeline",
+      "owner": "cryo-po",
+      "architect": "cryo-architect",
+      "analyst": "cryo-ba",
+      "status": "active",
+      "repositoryCount": 19,
+      "primaryLanguages": ["C++", "TypeScript", "Protobuf"],
+      "features": ["gRPC", "Binary serialization", "Asset bundling"],
+      "roadmapLink": "./cryo-roadmap.json"
+    },
+    "nuna": {
+      "name": "Nuna",
+      "description": "Audio plugin development SDK",
+      "owner": "nuna-po",
+      "architect": "nuna-architect",
+      "analyst": "nuna-ba",
+      "status": "active",
+      "repositoryCount": 8,
+      "primaryLanguages": ["C++"],
+      "formats": ["VST3", "AU", "CLAP"],
+      "roadmapLink": "./nuna-roadmap.json"
+    },
+    "arctic": {
+      "name": "Arctic",
+      "description": "Game engine and content ecosystem",
+      "owner": "arctic-po",
+      "architect": "arctic-architect",
+      "analyst": "arctic-ba",
+      "status": "active",
+      "repositoryCount": 12,
+      "primaryLanguages": ["C++", "TypeScript", "PHP"],
+      "features": ["Game client", "Services", "Content pipeline"],
+      "roadmapLink": "./arctic-roadmap.json"
+    },
+    "nexus": {
+      "name": "Nexus",
+      "description": "Platform and control systems",
+      "owner": "cto",
+      "architect": "infra-architect",
+      "status": "maintenance",
+      "repositoryCount": 6,
+      "primaryLanguages": ["TypeScript"],
+      "roadmapLink": null
+    },
+    "axon": {
+      "name": "Axon",
+      "description": "Runtime and service registry",
+      "owner": "cto",
+      "architect": "infra-architect",
+      "status": "maintenance",
+      "repositoryCount": 5,
+      "primaryLanguages": ["TypeScript", "Node.js"],
+      "roadmapLink": null
+    },
+    "infrastructure": {
+      "name": "Infrastructure",
+      "description": "Shared tooling and MCP orchestration",
+      "owner": "infra-architect",
+      "architect": "infra-architect",
+      "status": "active",
+      "repositoryCount": 7,
+      "primaryLanguages": ["TypeScript"],
+      "features": ["MCP servers", "CLI tools", "Build systems"],
+      "roadmapLink": null
+    }
+  }
+}

@@ -33,9 +33,19 @@ An Nx monorepo containing MCP (Model Context Protocol) servers for the **chevp w
 
 ## 📦 Packages
 
+### Orchestration MCPs (Executive Layer)
+
 | Package | Description |
 |---------|-------------|
-| `@mcp-suite/core` | Shared utilities for MCP servers |
+| `@mcp-suite/ceo` | CEO MCP - Strategic direction and cross-cutting decisions |
+| `@mcp-suite/cto` | CTO MCP - Technical excellence and architecture coordination |
+| `@mcp-suite/infra-architect` | Infrastructure Architect MCP - Shared infrastructure and MCP orchestration |
+
+### Domain MCPs
+
+| Package | Description |
+|---------|-------------|
+| `@mcp-suite/core` | Shared utilities, protocol types, and message queue for MCP servers |
 | `@mcp-suite/arctic` | MCP server for Arctic Workspace architecture and build system |
 | `@mcp-suite/chevp` | MCP server for chevp.github.io design system |
 | `@mcp-suite/cryo-protocol` | MCP server for Cryo Protocol definitions and gRPC services |
@@ -176,18 +186,27 @@ $ npx nx start @mcp-suite/nuna
 ```
 chevp-mcp-suite/
 ├── packages/
-│   ├── core/                  # Shared utilities
+│   ├── core/                  # Shared utilities and protocol types
 │   │   └── src/
+│   │       └── protocol/      # Message queue, context store, types
+│   ├── ceo-mcp/               # CEO MCP (Strategic direction)
+│   │   └── src/tools/
+│   ├── cto-mcp/               # CTO MCP (Technical excellence)
+│   │   └── src/tools/
+│   ├── infra-architect-mcp/   # Infra Architect MCP (Orchestration)
+│   │   └── src/tools/
 │   ├── arctic-mcp/            # Arctic Workspace MCP
-│   │   └── src/
 │   ├── chevp-mcp/             # Design System MCP
-│   │   └── src/
 │   ├── cryo-protocol-mcp/     # Cryo Protocol MCP
-│   │   └── src/
 │   ├── nuna-mcp/              # Nuna SDK MCP
-│   │   └── src/
 │   └── portfolio-mcp/         # Portfolio MCP
-│       └── src/
+├── context-store/             # Shared state for MCP orchestration
+│   ├── portfolio/             # Strategic priorities, products
+│   ├── technical/             # Standards, debt registry, ADRs
+│   ├── products/              # Per-product backlogs, architecture
+│   ├── messages/              # Message queue (pending, processed)
+│   └── repo-registry/         # Repository ownership mapping
+├── docs/                      # Architecture documentation
 ├── nx.json                    # Nx configuration
 ├── package.json               # Root package.json
 └── tsconfig.base.json         # Base TypeScript config

@@ -97,3 +97,8 @@ export function resolveWorkspacePath(...segments: string[]): string {
   const workspaceRoot = process.env.CHEVP_WORKSPACE_ROOT ?? 'c:/chevp';
   return path.join(workspaceRoot, ...segments);
 }
+
+// Protocol exports
+export * from './protocol/types.js';
+export * from './protocol/message-queue.js';
+export * from './protocol/context-store.js';

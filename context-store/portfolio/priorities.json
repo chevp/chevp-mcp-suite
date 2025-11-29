@@ -1,0 +1,64 @@
+{
+  "$schema": "./priorities.schema.json",
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-28T00:00:00Z",
+  "currentQuarter": "Q1-2025",
+  "strategicPriorities": [
+    {
+      "id": "sp-001",
+      "title": "MCP Orchestration Infrastructure",
+      "description": "Implement hierarchical MCP system for workspace management",
+      "owner": "ceo",
+      "status": "in_progress",
+      "priority": 1,
+      "products": ["infrastructure"],
+      "deliverables": [
+        "CEO-MCP with portfolio overview",
+        "CTO-MCP with technical standards",
+        "Infra-Architect-MCP for orchestration",
+        "Communication protocol implementation"
+      ],
+      "targetCompletion": "2025-01-31"
+    },
+    {
+      "id": "sp-002",
+      "title": "CoreGFX Vulkan Backend Stabilization",
+      "description": "Complete Vulkan backend implementation and testing",
+      "owner": "coregfx-po",
+      "status": "planned",
+      "priority": 2,
+      "products": ["coregfx"],
+      "deliverables": [
+        "Vulkan render pipeline",
+        "Shader compilation system",
+        "Performance benchmarks"
+      ],
+      "targetCompletion": "2025-02-28"
+    },
+    {
+      "id": "sp-003",
+      "title": "Nuna VST3/CLAP Support",
+      "description": "Add VST3 and CLAP plugin format support to Nuna SDK",
+      "owner": "nuna-po",
+      "status": "planned",
+      "priority": 3,
+      "products": ["nuna"],
+      "deliverables": [
+        "VST3 wrapper implementation",
+        "CLAP wrapper implementation",
+        "Format conversion utilities"
+      ],
+      "targetCompletion": "2025-03-31"
+    }
+  ],
+  "quarterlyGoals": {
+    "Q1-2025": {
+      "theme": "Infrastructure & Stability",
+      "goals": [
+        "Complete MCP orchestration system",
+        "Stabilize CoreGFX Vulkan backend",
+        "Begin Nuna plugin format expansion"
+      ]
+    }
+  }
+}

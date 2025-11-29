@@ -1,0 +1,123 @@
+{
+  "product": "coregfx",
+  "personas": [
+    {
+      "id": "persona-1764373047454",
+      "name": "Alex Chen",
+      "role": "Game Developer",
+      "background": "Senior game developer with 8+ years experience building indie and AA games. Familiar with Unity/Unreal but seeking more control over rendering pipeline.",
+      "goals": [
+        "Build custom 3D games with high visual fidelity",
+        "Have full control over rendering pipeline",
+        "Achieve consistent 60fps on target hardware",
+        "Integrate with existing game engine architecture"
+      ],
+      "painPoints": [
+        "Black-box rendering in commercial engines",
+        "Limited shader customization options",
+        "Performance overhead from engine abstraction layers",
+        "Difficulty debugging graphics issues"
+      ],
+      "needs": [
+        "Clean C++ API with predictable behavior",
+        "Easy GLTF/GLB asset pipeline",
+        "PBR materials out of the box",
+        "Good documentation and examples"
+      ],
+      "technicalLevel": "advanced",
+      "usageContext": "Desktop game development on Windows, targeting Steam release",
+      "keyTasks": [
+        "Load and render 3D models",
+        "Apply PBR materials",
+        "Animate characters with skeletal animation",
+        "Debug rendering issues"
+      ],
+      "successMetrics": [
+        "Time to first rendered frame < 1 hour",
+        "Stable 60fps with 100+ animated characters",
+        "Memory usage within budget"
+      ],
+      "createdAt": "2025-11-28T23:37:27.454Z",
+      "updatedAt": "2025-11-28T23:37:27.454Z"
+    },
+    {
+      "id": "persona-1764373077456",
+      "name": "Sarah Mitchell",
+      "role": "3D Visualization Developer",
+      "background": "Software engineer at architecture/CAD firm building 3D visualization tools. Strong C++ skills but limited graphics programming experience.",
+      "goals": [
+        "Create interactive 3D viewers for architectural models",
+        "Support high-quality material rendering",
+        "Enable real-time walkthroughs",
+        "Integrate with existing CAD workflows"
+      ],
+      "painPoints": [
+        "Steep learning curve for Vulkan",
+        "Complex shader management",
+        "Difficulty with cross-platform deployment",
+        "Limited time to learn graphics fundamentals"
+      ],
+      "needs": [
+        "High-level API that hides Vulkan complexity",
+        "GLTF import with automatic material setup",
+        "Simple camera and navigation controls",
+        "Cross-platform support (Windows primary)"
+      ],
+      "technicalLevel": "intermediate",
+      "usageContext": "Enterprise visualization tools, primarily Windows desktop",
+      "keyTasks": [
+        "Load GLTF models exported from CAD",
+        "Set up camera navigation",
+        "Apply and tweak PBR materials",
+        "Create standalone viewer applications"
+      ],
+      "successMetrics": [
+        "Load any valid GLTF without manual tweaking",
+        "Render photorealistic materials",
+        "Simple integration with Qt/native UI"
+      ],
+      "createdAt": "2025-11-28T23:37:57.456Z",
+      "updatedAt": "2025-11-28T23:37:57.456Z"
+    },
+    {
+      "id": "persona-1764373079573",
+      "name": "Marcus Weber",
+      "role": "Graphics Engine Developer",
+      "background": "Graphics programmer with deep Vulkan/OpenGL experience. Building custom engine components and needs low-level access with high-level conveniences.",
+      "goals": [
+        "Extend and customize rendering pipeline",
+        "Implement custom shader effects",
+        "Optimize for specific hardware targets",
+        "Contribute to CoreGFX development"
+      ],
+      "painPoints": [
+        "APIs that hide too much control",
+        "Inflexible material systems",
+        "Poor extensibility patterns",
+        "Lack of internal documentation"
+      ],
+      "needs": [
+        "Access to low-level Vulkan handles when needed",
+        "Extensible shader system",
+        "Clear module boundaries",
+        "Well-documented architecture"
+      ],
+      "technicalLevel": "expert",
+      "usageContext": "Custom engine development, research projects, game studios",
+      "keyTasks": [
+        "Create custom render passes",
+        "Implement new shader features",
+        "Profile and optimize performance",
+        "Integrate with custom memory allocators"
+      ],
+      "successMetrics": [
+        "Can access VkDevice and other handles",
+        "Can inject custom render passes",
+        "Clear extension points documented"
+      ],
+      "createdAt": "2025-11-28T23:37:59.573Z",
+      "updatedAt": "2025-11-28T23:37:59.573Z"
+    }
+  ],
+  "lastUpdated": "2025-11-28T23:37:59.573Z"
+}

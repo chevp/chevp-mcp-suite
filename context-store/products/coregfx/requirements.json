@@ -1,0 +1,632 @@
+{
+  "product": "coregfx",
+  "requirements": [
+    {
+      "id": "req-fun-1764373111092",
+      "type": "functional",
+      "category": "core",
+      "title": "Vulkan Context Initialization",
+      "description": "The system shall provide automatic Vulkan instance and device creation with sensible defaults while allowing advanced users to customize device selection and feature requirements.",
+      "rationale": "Foundation for all rendering operations. Must work out-of-box for intermediate users while exposing control for experts.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - core module",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "VulkanContext initializes with zero configuration on supported hardware",
+        "Device selection can be overridden programmatically",
+        "Required Vulkan extensions are validated at startup",
+        "Clear error messages when initialization fails"
+      ],
+      "createdAt": "2025-11-28T23:38:31.092Z",
+      "updatedAt": "2025-11-28T23:38:31.092Z"
+    },
+    {
+      "id": "req-fun-1764373113145",
+      "type": "functional",
+      "category": "core",
+      "title": "Command Buffer Management",
+      "description": "The system shall manage Vulkan command buffer allocation, recording, and submission with automatic synchronization and frame pacing.",
+      "rationale": "Critical for correct GPU command execution. Hides complexity of Vulkan synchronization from users.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - core module",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Command buffers are pooled and reused efficiently",
+        "Frame synchronization prevents GPU/CPU conflicts",
+        "Users can access raw command buffers when needed",
+        "Supports multiple frames in flight"
+      ],
+      "createdAt": "2025-11-28T23:38:33.145Z",
+      "updatedAt": "2025-11-28T23:38:33.145Z"
+    },
+    {
+      "id": "req-fun-1764373132626",
+      "type": "functional",
+      "category": "core",
+      "title": "GPU Memory Allocation",
+      "description": "The system shall provide efficient GPU memory allocation for buffers and images with automatic memory type selection and defragmentation support.",
+      "rationale": "Proper memory management is critical for performance and stability.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - core module",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Memory allocation uses VMA or equivalent allocator",
+        "Appropriate memory types selected automatically",
+        "Memory usage can be queried and monitored",
+        "Graceful handling of out-of-memory conditions"
+      ],
+      "createdAt": "2025-11-28T23:38:52.626Z",
+      "updatedAt": "2025-11-28T23:38:52.626Z"
+    },
+    {
+      "id": "req-fun-1764373162371",
+      "type": "functional",
+      "category": "gltf",
+      "title": "GLTF 2.0 Model Loading",
+      "description": "The system shall load GLTF 2.0 and GLB files with full support for meshes, materials, textures, and scene hierarchy.",
+      "rationale": "GLTF is the standard 3D interchange format. Full support enables interoperability with all major 3D tools.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - gltf module",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Load .gltf and .glb files",
+        "Parse all standard GLTF 2.0 features",
+        "Support embedded and external resources",
+        "Validate GLTF structure and report errors"
+      ],
+      "createdAt": "2025-11-28T23:39:22.371Z",
+      "updatedAt": "2025-11-28T23:39:22.371Z"
+    },
+    {
+      "id": "req-fun-1764373164421",
+      "type": "functional",
+      "category": "gltf",
+      "title": "Skeletal Animation Support",
+      "description": "The system shall support skeletal animation including bone hierarchies, skinning, and animation playback from GLTF files.",
+      "rationale": "Character animation is essential for games and interactive applications.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - SKINNING shader feature",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Parse GLTF skin and joint data",
+        "GPU-accelerated skinning in vertex shader",
+        "Animation timeline playback with interpolation",
+        "Support for multiple animations per model"
+      ],
+      "createdAt": "2025-11-28T23:39:24.421Z",
+      "updatedAt": "2025-11-28T23:39:24.421Z"
+    },
+    {
+      "id": "req-fun-1764373166307",
+      "type": "functional",
+      "category": "gltf",
+      "title": "Morph Target Animation",
+      "description": "The system shall support morph target (blend shape) animation for facial expressions and mesh deformation.",
+      "rationale": "Morph targets enable facial animation and soft-body deformation effects.",
+      "priority": "should",
+      "status": "draft",
+      "source": "Codebase analysis - MORPH_TARGETS shader feature",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Parse GLTF morph target data",
+        "Blend between morph targets with weights",
+        "GPU-accelerated morph blending",
+        "Combine with skeletal animation"
+      ],
+      "createdAt": "2025-11-28T23:39:26.307Z",
+      "updatedAt": "2025-11-28T23:39:26.307Z"
+    },
+    {
+      "id": "req-fun-1764373193397",
+      "type": "functional",
+      "category": "rendering",
+      "title": "PBR Material Rendering",
+      "description": "The system shall render physically-based materials using the metallic-roughness workflow with support for all standard PBR texture maps.",
+      "rationale": "PBR is the industry standard for realistic material rendering. Essential for professional-quality output.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - pbr module",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Support baseColor, metallic, roughness, normal, occlusion, emissive maps",
+        "Correct energy conservation in shading",
+        "Match Khronos GLTF sample viewer output",
+        "Support both textured and constant material values"
+      ],
+      "createdAt": "2025-11-28T23:39:53.397Z",
+      "updatedAt": "2025-11-28T23:39:53.397Z"
+    },
+    {
+      "id": "req-fun-1764373195814",
+      "type": "functional",
+      "category": "rendering",
+      "title": "Image-Based Lighting",
+      "description": "The system shall support image-based lighting (IBL) using environment maps for realistic ambient lighting and reflections.",
+      "rationale": "IBL provides realistic environment lighting essential for photorealistic rendering.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - IBL shader feature",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Load HDR environment maps",
+        "Generate diffuse irradiance maps",
+        "Generate specular prefiltered maps",
+        "Support runtime environment switching"
+      ],
+      "createdAt": "2025-11-28T23:39:55.814Z",
+      "updatedAt": "2025-11-28T23:39:55.814Z"
+    },
+    {
+      "id": "req-fun-1764373197955",
+      "type": "functional",
+      "category": "rendering",
+      "title": "Transparency Rendering",
+      "description": "The system shall support both alpha masking and alpha blending for transparent materials with correct sorting.",
+      "rationale": "Transparency is required for glass, foliage, and many common materials.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - ALPHA_MASK, ALPHA_BLEND shader features",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Alpha mask with configurable cutoff threshold",
+        "Alpha blending with correct depth sorting",
+        "Separate render passes for opaque and transparent",
+        "Double-sided rendering support"
+      ],
+      "createdAt": "2025-11-28T23:39:57.955Z",
+      "updatedAt": "2025-11-28T23:39:57.955Z"
+    },
+    {
+      "id": "req-fun-1764373199646",
+      "type": "functional",
+      "category": "rendering",
+      "title": "Advanced Material Extensions",
+      "description": "The system shall support GLTF material extensions including clearcoat and transmission for advanced material effects.",
+      "rationale": "Extensions like clearcoat and transmission enable car paint, glass, and other advanced materials.",
+      "priority": "should",
+      "status": "draft",
+      "source": "Codebase analysis - CLEARCOAT, TRANSMISSION shader features",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "KHR_materials_clearcoat extension support",
+        "KHR_materials_transmission extension support",
+        "Correct layering of clearcoat over base material",
+        "Refraction for transmission materials"
+      ],
+      "createdAt": "2025-11-28T23:39:59.646Z",
+      "updatedAt": "2025-11-28T23:39:59.646Z"
+    },
+    {
+      "id": "req-fun-1764373226685",
+      "type": "functional",
+      "category": "resources",
+      "title": "URI-Based Asset Resolution",
+      "description": "The system shall resolve assets using URI schemes (asset://, pak://) providing a unified interface for filesystem and packaged assets.",
+      "rationale": "URI-based loading enables flexible asset deployment without code changes between development and production.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - rsc module URI schemes",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "asset:// resolves to filesystem paths",
+        "pak:// resolves to PAK archive contents",
+        "Consistent API regardless of asset source",
+        "Extensible for custom URI schemes"
+      ],
+      "createdAt": "2025-11-28T23:40:26.685Z",
+      "updatedAt": "2025-11-28T23:40:26.685Z"
+    },
+    {
+      "id": "req-fun-1764373228330",
+      "type": "functional",
+      "category": "resources",
+      "title": "PAK Archive Support",
+      "description": "The system shall support loading assets from PAK archive files for efficient packaged deployment.",
+      "rationale": "PAK archives enable single-file distribution and faster loading from fewer filesystem operations.",
+      "priority": "should",
+      "status": "draft",
+      "source": "Codebase analysis - pak module",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Read assets from PAK files",
+        "Support PAK file creation tooling",
+        "Transparent integration with asset system",
+        "Optional compression support"
+      ],
+      "createdAt": "2025-11-28T23:40:28.330Z",
+      "updatedAt": "2025-11-28T23:40:28.330Z"
+    },
+    {
+      "id": "req-fun-1764373230008",
+      "type": "functional",
+      "category": "resources",
+      "title": "Texture Atlasing",
+      "description": "The system shall support automatic texture atlasing to pack multiple PBR textures into shared atlases for GPU memory optimization.",
+      "rationale": "Atlasing reduces texture binding overhead and enables batch rendering of diverse materials.",
+      "priority": "should",
+      "status": "draft",
+      "source": "Codebase analysis - material_atlas module",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Automatic packing of material textures",
+        "UV coordinate adjustment in shaders",
+        "Configurable atlas size limits",
+        "Fallback to individual textures when needed"
+      ],
+      "createdAt": "2025-11-28T23:40:30.008Z",
+      "updatedAt": "2025-11-28T23:40:30.008Z"
+    },
+    {
+      "id": "req-fun-1764373418302",
+      "type": "functional",
+      "category": "cryo-integration",
+      "title": "Cryo Scene Protocol Integration",
+      "description": "The system shall receive and process scene configuration from Cryo protocol messages, enabling external scene control via RuntimeContext.",
+      "rationale": "Core integration point for Cryo ecosystem. Enables Cryo Studio and other tools to control CoreGFX scenes.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - RuntimeContext/cryo.scene relationship",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Process SceneConfig messages from cryo.scene",
+        "Handle SceneLoadRequest for dynamic scene loading",
+        "RuntimeContext correctly applies scene parameters",
+        "Error feedback when scene configuration fails"
+      ],
+      "createdAt": "2025-11-28T23:43:38.302Z",
+      "updatedAt": "2025-11-28T23:43:38.302Z"
+    },
+    {
+      "id": "req-fun-1764373421459",
+      "type": "functional",
+      "category": "cryo-integration",
+      "title": "Cryo Render Command Protocol",
+      "description": "The system shall accept render commands from Cryo protocol for camera updates, material overrides, and render state control.",
+      "rationale": "Enables external applications to control rendering without direct API coupling.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - OceanPbrApp/cryo.render relationship",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Process RenderCommand from cryo.render",
+        "Apply CameraUpdate messages in real-time",
+        "Support MaterialOverride for runtime material changes",
+        "Commands applied within same frame when possible"
+      ],
+      "createdAt": "2025-11-28T23:43:41.459Z",
+      "updatedAt": "2025-11-28T23:43:41.459Z"
+    },
+    {
+      "id": "req-fun-1764373469783",
+      "type": "functional",
+      "category": "cryo-integration",
+      "title": "Cryo Asset Protocol Integration",
+      "description": "The system shall load assets on demand via Cryo asset protocol requests, integrating with the URI-based asset resolution system.",
+      "rationale": "Enables Cryo tools to trigger asset loading without direct filesystem access.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - AssetLoader/cryo.asset relationship",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Process AssetLoadRequest from cryo.asset",
+        "Resolve AssetReference to URI scheme",
+        "Report loading progress and completion",
+        "Handle loading failures gracefully"
+      ],
+      "createdAt": "2025-11-28T23:44:29.783Z",
+      "updatedAt": "2025-11-28T23:44:29.783Z"
+    },
+    {
+      "id": "req-fun-1764373471899",
+      "type": "functional",
+      "category": "cryo-integration",
+      "title": "Cryo Frame Feedback Protocol",
+      "description": "The system shall send frame completion, render statistics, and optional framebuffer data back to Cryo via the frame protocol.",
+      "rationale": "Enables monitoring, synchronization, and remote rendering use cases.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - VulkanContext/cryo.frame relationship",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Send FrameComplete after each rendered frame",
+        "Include RenderStats with timing and draw call counts",
+        "Optional FrameBuffer capture for remote viewing",
+        "Low-overhead when feedback not requested"
+      ],
+      "createdAt": "2025-11-28T23:44:31.899Z",
+      "updatedAt": "2025-11-28T23:44:31.899Z"
+    },
+    {
+      "id": "req-fun-1764373473783",
+      "type": "functional",
+      "category": "cryo-integration",
+      "title": "Bidirectional Cryo API Service",
+      "description": "The system shall provide a bidirectional API service for request/response and event notification patterns with Cryo ecosystem.",
+      "rationale": "Central integration point for complex interactions beyond simple commands.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - CryoApiService/cryo.api relationship",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Handle ApiRequest and send ApiResponse",
+        "Push EventNotification for state changes",
+        "Support async request handling",
+        "Timeout handling for unresponsive requests"
+      ],
+      "createdAt": "2025-11-28T23:44:33.783Z",
+      "updatedAt": "2025-11-28T23:44:33.783Z"
+    },
+    {
+      "id": "req-fun-1764373495815",
+      "type": "functional",
+      "category": "platform",
+      "title": "Windows Platform Support",
+      "description": "The system shall support Windows desktop with native window creation and Vulkan surface integration.",
+      "rationale": "Windows is the primary development and deployment target.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - platform module (stable for Windows)",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Create native Win32 windows",
+        "Vulkan surface creation via VK_KHR_win32_surface",
+        "Handle window resize and DPI changes",
+        "Support fullscreen and windowed modes"
+      ],
+      "createdAt": "2025-11-28T23:44:55.815Z",
+      "updatedAt": "2025-11-28T23:44:55.815Z"
+    },
+    {
+      "id": "req-fun-1764373497818",
+      "type": "functional",
+      "category": "platform",
+      "title": "Android Platform Support",
+      "description": "The system shall support Android with native activity integration and Vulkan surface creation.",
+      "rationale": "Mobile deployment enables broader reach. Currently partial implementation.",
+      "priority": "should",
+      "status": "draft",
+      "source": "Codebase analysis - platform module (partial status)",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Integration with Android NativeActivity",
+        "Vulkan surface via VK_KHR_android_surface",
+        "Handle lifecycle events (pause/resume)",
+        "Touch input support"
+      ],
+      "createdAt": "2025-11-28T23:44:57.818Z",
+      "updatedAt": "2025-11-28T23:44:57.818Z"
+    },
+    {
+      "id": "req-fun-1764373499474",
+      "type": "functional",
+      "category": "platform",
+      "title": "Headless Rendering Mode",
+      "description": "The system shall support headless rendering without a display for server-side rendering and testing.",
+      "rationale": "Essential for CI/CD, server rendering, and Cryo integration testing.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - platform module headless mode",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Render to offscreen framebuffer",
+        "No display or window system required",
+        "Framebuffer readback for validation",
+        "Works in Docker/CI environments"
+      ],
+      "createdAt": "2025-11-28T23:44:59.474Z",
+      "updatedAt": "2025-11-28T23:44:59.474Z"
+    },
+    {
+      "id": "req-non-1764373530053",
+      "type": "non_functional",
+      "category": "performance",
+      "title": "Frame Rate Performance",
+      "description": "The system shall maintain 60fps rendering for typical scenes with PBR materials and skeletal animation.",
+      "rationale": "Consistent frame rate is essential for interactive applications and games.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Industry standard for real-time graphics",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "60fps with 100k triangles and 10 animated characters",
+        "Frame time variance < 2ms for smooth animation",
+        "GPU utilization optimized for target hardware",
+        "Performance metrics exposed via overlay"
+      ],
+      "createdAt": "2025-11-28T23:45:30.053Z",
+      "updatedAt": "2025-11-28T23:45:30.053Z"
+    },
+    {
+      "id": "req-non-1764373531953",
+      "type": "non_functional",
+      "category": "performance",
+      "title": "Memory Efficiency",
+      "description": "The system shall manage GPU and CPU memory efficiently with predictable allocation patterns and leak prevention.",
+      "rationale": "Memory leaks and fragmentation cause crashes and degraded performance over time.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Reliability requirement for production use",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "No memory leaks in long-running sessions",
+        "GPU memory usage queryable at runtime",
+        "Graceful degradation when memory limited",
+        "Texture streaming for large assets"
+      ],
+      "createdAt": "2025-11-28T23:45:31.953Z",
+      "updatedAt": "2025-11-28T23:45:31.953Z"
+    },
+    {
+      "id": "req-non-1764373533715",
+      "type": "non_functional",
+      "category": "compatibility",
+      "title": "Vulkan Version Compatibility",
+      "description": "The system shall support Vulkan 1.1+ with optional use of 1.2/1.3 features when available.",
+      "rationale": "Broad hardware support while enabling modern features on capable hardware.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase uses Vulkan 1.3.231.1",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Core functionality works on Vulkan 1.1",
+        "Feature detection for 1.2/1.3 capabilities",
+        "Graceful fallback when features unavailable",
+        "Clear documentation of minimum requirements"
+      ],
+      "createdAt": "2025-11-28T23:45:33.715Z",
+      "updatedAt": "2025-11-28T23:45:33.715Z"
+    },
+    {
+      "id": "req-con-1764373535345",
+      "type": "constraint",
+      "category": "compatibility",
+      "title": "C++17 Standard Compliance",
+      "description": "The system shall be fully compliant with C++17 standard for broad compiler support.",
+      "rationale": "C++17 provides modern features while maintaining compatibility with common toolchains.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Codebase analysis - C++17 standard",
+      "traceability": {
+        "features": [],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Compile with MSVC 2019+, GCC 9+, Clang 10+",
+        "No C++20 features in public headers",
+        "CMake 3.20+ build system",
+        "Cross-platform build support"
+      ],
+      "createdAt": "2025-11-28T23:45:35.345Z",
+      "updatedAt": "2025-11-28T23:45:35.345Z"
+    },
+    {
+      "id": "req-fun-1764373909522",
+      "type": "functional",
+      "category": "cryo-integration",
+      "title": "SceneConfig Protocol Handler",
+      "description": "The system shall process SceneConfig messages from the cryo.scene protocol domain and apply the configuration to RuntimeContext.",
+      "rationale": "Core requirement for Cryo ecosystem integration - enables external scene control.",
+      "priority": "must",
+      "status": "draft",
+      "source": "Epic: Cryo Protocol Integration (epic-001)",
+      "traceability": {
+        "features": [
+          "cgfx-feat-1764373817323"
+        ],
+        "stories": [],
+        "tests": []
+      },
+      "acceptanceCriteria": [
+        "Deserialize SceneConfig protobuf messages",
+        "Validate scene configuration parameters",
+        "Apply valid config to RuntimeContext",
+        "Return error response for invalid config"
+      ],
+      "createdAt": "2025-11-28T23:51:49.522Z",
+      "updatedAt": "2025-11-28T23:51:49.522Z"
+    }
+  ],
+  "lastUpdated": "2025-11-28T23:51:49.522Z"
+}

@@ -1,0 +1,81 @@
+{
+  "id": "cgfx-comp-api-cryoscenehandler",
+  "name": "CryoSceneHandler",
+  "module": "api",
+  "purpose": "Handle cryo.scene protocol messages and translate to RuntimeContext operations",
+  "responsibilities": [
+    "Deserialize SceneConfig protobuf messages",
+    "Validate scene configuration parameters",
+    "Invoke RuntimeContext::loadScene() with parsed config",
+    "Generate success/error response messages"
+  ],
+  "dependencies": [
+    "RuntimeContext",
+    "cryo-protocol (generated)",
+    "AssetResolver"
+  ],
+  "interfaces": [
+    {
+      "name": "ICryoMessageHandler",
+      "type": "public",
+      "methods": [
+        {
+          "name": "handleMessage",
+          "signature": "CryoResponse handleMessage(const CryoMessage& msg)",
+          "description": "Process incoming Cryo protocol message and return response"
+        },
+        {
+          "name": "canHandle",
+          "signature": "bool canHandle(const std::string& messageType)",
+          "description": "Check if this handler supports the given message type"
+        }
+      ]
+    },
+    {
+      "name": "ISceneConfigHandler",
+      "type": "internal",
+      "methods": [
+        {
+          "name": "applySceneConfig",
+          "signature": "Result applySceneConfig(const cryo::scene::SceneConfig& config)",
+          "description": "Apply parsed scene configuration to RuntimeContext"
+        }
+      ]
+    }
+  ],
+  "dataStructures": [
+    {
+      "name": "SceneConfigResult",
+      "fields": [
+        {
+          "name": "success",
+          "type": "bool",
+          "description": "Whether configuration was applied"
+        },
+        {
+          "name": "sceneId",
+          "type": "std::string",
+          "description": "Loaded scene identifier"
+        },
+        {
+          "name": "errorMessage",
+          "type": "std::optional<std::string>",
+          "description": "Error details if failed"
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    "Must not block render thread",
+    "Message parsing < 1ms",
+    "Compatible with existing RuntimeContext API"
+  ],
+  "performanceRequirements": [
+    "Handle 100+ messages/second",
+    "No memory allocations in hot path",
+    "Zero-copy message passing where possible"
+  ],
+  "status": "draft",
+  "createdAt": "2025-11-28T23:52:33.832Z",
+  "updatedAt": "2025-11-28T23:52:33.834Z"
+}

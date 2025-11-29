@@ -1,0 +1,186 @@
+{
+  "product": "coregfx",
+  "items": [
+    {
+      "id": "cgfx-fea-1764373806447",
+      "type": "feature",
+      "title": "SceneConfig Message Handler",
+      "description": "Implement handler for cryo.scene SceneConfig messages to enable external scene control via Cryo protocol",
+      "acceptanceCriteria": [
+        "Parse SceneConfig protobuf message",
+        "Apply configuration to RuntimeContext",
+        "Return success/error response via protocol",
+        "Handle invalid configurations gracefully"
+      ],
+      "priority": 1,
+      "status": "new",
+      "labels": [
+        "cryo-integration",
+        "mvp",
+        "priority-1"
+      ],
+      "createdAt": "2025-11-28T23:50:06.447Z",
+      "updatedAt": "2025-11-28T23:50:06.447Z"
+    },
+    {
+      "id": "cgfx-epi-1764374665374",
+      "type": "epic",
+      "title": "Vulkan Backend Stabilization",
+      "description": "Complete and stabilize the Vulkan rendering backend for production use",
+      "acceptanceCriteria": [],
+      "priority": 1,
+      "status": "new",
+      "labels": [
+        "vulkan",
+        "rendering",
+        "core",
+        "q1-2025"
+      ],
+      "createdAt": "2025-11-29T00:04:25.374Z",
+      "updatedAt": "2025-11-29T00:04:25.375Z"
+    },
+    {
+      "id": "cgfx-epi-1764374667021",
+      "type": "epic",
+      "title": "Shader Compilation Pipeline",
+      "description": "Implement cross-platform shader compilation from GLSL/HLSL to SPIR-V",
+      "acceptanceCriteria": [],
+      "priority": 2,
+      "status": "new",
+      "labels": [
+        "shaders",
+        "pipeline",
+        "core"
+      ],
+      "createdAt": "2025-11-29T00:04:27.021Z",
+      "updatedAt": "2025-11-29T00:04:27.021Z"
+    },
+    {
+      "id": "cgfx-epi-1764374668496",
+      "type": "epic",
+      "title": "PBR Material System",
+      "description": "Physically-based rendering material system with texture management",
+      "acceptanceCriteria": [],
+      "priority": 3,
+      "status": "new",
+      "labels": [
+        "pbr",
+        "materials",
+        "rendering"
+      ],
+      "createdAt": "2025-11-29T00:04:28.496Z",
+      "updatedAt": "2025-11-29T00:04:28.496Z"
+    },
+    {
+      "id": "cgfx-fea-1764374670201",
+      "type": "feature",
+      "title": "VulkanContext Initialization",
+      "description": "Robust Vulkan instance, device, and swapchain initialization",
+      "acceptanceCriteria": [],
+      "priority": 5,
+      "status": "new",
+      "labels": [
+        "vulkan",
+        "initialization"
+      ],
+      "createdAt": "2025-11-29T00:04:30.201Z",
+      "updatedAt": "2025-11-29T00:04:30.201Z"
+    },
+    {
+      "id": "cgfx-fea-1764374671534",
+      "type": "feature",
+      "title": "Render Pipeline Configuration",
+      "description": "Configurable render pipeline with multiple passes support",
+      "acceptanceCriteria": [],
+      "priority": 6,
+      "status": "new",
+      "labels": [
+        "vulkan",
+        "pipeline"
+      ],
+      "createdAt": "2025-11-29T00:04:31.534Z",
+      "updatedAt": "2025-11-29T00:04:31.534Z"
+    },
+    {
+      "id": "cgfx-fea-1764374672991",
+      "type": "feature",
+      "title": "glTF Asset Loading",
+      "description": "Load and render glTF 2.0 models with materials and animations",
+      "acceptanceCriteria": [],
+      "priority": 7,
+      "status": "new",
+      "labels": [
+        "gltf",
+        "assets",
+        "loading"
+      ],
+      "createdAt": "2025-11-29T00:04:32.991Z",
+      "updatedAt": "2025-11-29T00:04:32.991Z"
+    },
+    {
+      "id": "cgfx-sto-1764374674377",
+      "type": "story",
+      "title": "Create Vulkan instance with validation layers",
+      "description": "As a developer, I want Vulkan validation layers enabled in debug builds so I can catch API misuse early",
+      "acceptanceCriteria": [
+        "Vulkan instance created successfully",
+        "Validation layers enabled in debug mode",
+        "Error callback registered for validation messages"
+      ],
+      "priority": 10,
+      "storyPoints": 3,
+      "status": "new",
+      "labels": [
+        "vulkan",
+        "initialization",
+        "sprint-ready"
+      ],
+      "createdAt": "2025-11-29T00:04:34.377Z",
+      "updatedAt": "2025-11-29T00:04:34.377Z"
+    },
+    {
+      "id": "cgfx-sto-1764374675863",
+      "type": "story",
+      "title": "Select physical device with required features",
+      "description": "As a developer, I want automatic GPU selection based on required features so the renderer works on compatible hardware",
+      "acceptanceCriteria": [
+        "Enumerate all available GPUs",
+        "Score GPUs by capability",
+        "Select best GPU or allow manual override",
+        "Verify required features are supported"
+      ],
+      "priority": 11,
+      "storyPoints": 5,
+      "status": "new",
+      "labels": [
+        "vulkan",
+        "initialization",
+        "sprint-ready"
+      ],
+      "createdAt": "2025-11-29T00:04:35.863Z",
+      "updatedAt": "2025-11-29T00:04:35.863Z"
+    },
+    {
+      "id": "cgfx-sto-1764374677583",
+      "type": "story",
+      "title": "Create swapchain with proper present modes",
+      "description": "As a user, I want the renderer to support VSync and tearing options so I can choose my preferred display mode",
+      "acceptanceCriteria": [
+        "Create swapchain with configurable present mode",
+        "Support FIFO (VSync) and MAILBOX (triple buffer)",
+        "Handle window resize with swapchain recreation"
+      ],
+      "priority": 12,
+      "storyPoints": 5,
+      "status": "new",
+      "labels": [
+        "vulkan",
+        "swapchain",
+        "sprint-ready"
+      ],
+      "createdAt": "2025-11-29T00:04:37.583Z",
+      "updatedAt": "2025-11-29T00:04:37.583Z"
+    }
+  ],
+  "lastUpdated": "2025-11-29T00:09:19.992Z"
+}

@@ -1,0 +1,24 @@
+{
+  "id": "cgfx-feat-1764373817323",
+  "title": "SceneConfig Message Handler",
+  "hypothesis": "Implementing SceneConfig message handling will enable Cryo Studio to control CoreGFX scenes",
+  "benefitHypothesis": "Enables loose coupling between Cryo tools and CoreGFX renderer",
+  "acceptanceCriteria": [
+    "Parse SceneConfig protobuf message",
+    "Apply configuration to RuntimeContext",
+    "Return success/error response",
+    "Handle invalid configurations gracefully"
+  ],
+  "userStories": [],
+  "enablers": [
+    "Protobuf code generation for cryo.scene"
+  ],
+  "dependencies": [
+    "cryo-protocol definitions",
+    "RuntimeContext API"
+  ],
+  "risks": [],
+  "status": "draft",
+  "createdAt": "2025-11-28T23:50:17.323Z",
+  "updatedAt": "2025-11-28T23:50:17.323Z"
+}

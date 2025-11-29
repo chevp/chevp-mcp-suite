@@ -1,0 +1,59 @@
+{
+  "id": "adr-0001",
+  "number": 1,
+  "title": "Protocol Handler Architecture for Cryo Integration",
+  "status": "proposed",
+  "context": "CoreGFX needs to receive and process messages from Cryo protocol. We need to decide how protocol handlers are structured and integrated with the existing RuntimeContext and rendering pipeline.",
+  "decision": "Handler Service Layer - Implement CryoApiService as a separate component that receives protocol messages and translates them to RuntimeContext API calls",
+  "consequences": [
+    "Need to define ICryoApiService interface",
+    "RuntimeContext remains protocol-agnostic",
+    "Service handles message parsing and validation",
+    "Easy to mock for testing",
+    "Future: can add WebSocket or gRPC transports"
+  ],
+  "alternatives": [
+    {
+      "option": "Direct Integration - Handlers in RuntimeContext",
+      "pros": [
+        "Simple implementation",
+        "Direct access to context state",
+        "No extra abstraction layer"
+      ],
+      "cons": [
+        "Tight coupling to protocol",
+        "Hard to test in isolation",
+        "RuntimeContext becomes bloated"
+      ]
+    },
+    {
+      "option": "Handler Service Layer - Separate CryoApiService",
+      "pros": [
+        "Clean separation of concerns",
+        "Testable in isolation",
+        "Can swap protocol implementations"
+      ],
+      "cons": [
+        "Extra indirection",
+        "Slightly more complex",
+        "Need to define service interface"
+      ]
+    },
+    {
+      "option": "Event-Driven - Message Bus Pattern",
+      "pros": [
+        "Maximum flexibility",
+        "Supports multiple consumers",
+        "Easy to add new handlers"
+      ],
+      "cons": [
+        "Most complex",
+        "Debugging harder",
+        "Overkill for current needs"
+      ]
+    }
+  ],
+  "relatedAdrs": [],
+  "createdAt": "2025-11-28T23:52:11.497Z",
+  "updatedAt": "2025-11-28T23:52:11.497Z"
+}

@@ -1,0 +1,76 @@
+{
+  "id": "uc-1764373911480",
+  "name": "Configure Scene via Protocol",
+  "actor": "Cryo Studio",
+  "goal": "Load and configure a 3D scene in CoreGFX renderer",
+  "preconditions": [
+    "CoreGFX renderer is running",
+    "Protocol connection established",
+    "Scene assets are accessible"
+  ],
+  "postconditions": [
+    "Scene is loaded and rendered",
+    "RuntimeContext reflects new configuration",
+    "Cryo Studio has confirmation of success"
+  ],
+  "mainFlow": [
+    {
+      "step": 1,
+      "action": "Cryo Studio creates SceneConfig message with scene URI and parameters"
+    },
+    {
+      "step": 2,
+      "action": "Message is sent via cryo.scene protocol channel"
+    },
+    {
+      "step": 3,
+      "action": "CoreGFX receives and deserializes SceneConfig"
+    },
+    {
+      "step": 4,
+      "action": "RuntimeContext loads referenced scene assets"
+    },
+    {
+      "step": 5,
+      "action": "Scene configuration is applied (lighting, camera defaults, etc.)"
+    },
+    {
+      "step": 6,
+      "action": "Success response sent back to Cryo Studio"
+    }
+  ],
+  "alternativeFlows": [
+    {
+      "name": "Invalid Scene URI",
+      "steps": [
+        {
+          "step": 1,
+          "action": "SceneConfig contains invalid or inaccessible scene URI"
+        },
+        {
+          "step": 2,
+          "action": "Asset resolution fails"
+        },
+        {
+          "step": 3,
+          "action": "Error response with details sent to Cryo Studio"
+        }
+      ]
+    }
+  ],
+  "exceptions": [
+    {
+      "name": "Connection Lost",
+      "handling": "Queue pending configs, retry on reconnect"
+    },
+    {
+      "name": "Out of Memory",
+      "handling": "Return error with memory status, suggest smaller scene"
+    }
+  ],
+  "relatedRequirements": [],
+  "relatedFeatures": [],
+  "status": "draft",
+  "createdAt": "2025-11-28T23:51:51.480Z",
+  "updatedAt": "2025-11-28T23:51:51.480Z"
+}

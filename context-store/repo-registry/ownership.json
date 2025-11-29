@@ -1,0 +1,246 @@
+{
+  "$schema": "./ownership.schema.json",
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-28T00:00:00Z",
+  "repositories": {
+    "coregfx-sdk-dev": {
+      "path": "tools/coregfx-sdk-dev",
+      "owner": "coregfx-po",
+      "architect": "coregfx-architect",
+      "analyst": "coregfx-ba",
+      "product": "coregfx",
+      "category": "tools",
+      "status": "active",
+      "tags": ["graphics", "sdk", "core"]
+    },
+    "arctic-cpp-playground": {
+      "path": "playground/arctic-cpp-playground",
+      "owner": "coregfx-po",
+      "architect": "coregfx-architect",
+      "analyst": "coregfx-ba",
+      "product": "coregfx",
+      "category": "playground",
+      "status": "active",
+      "tags": ["graphics", "c++", "development"]
+    },
+    "render-forge": {
+      "path": "misc/render-forge",
+      "owner": "coregfx-po",
+      "architect": "coregfx-architect",
+      "product": "coregfx",
+      "category": "misc",
+      "status": "active",
+      "tags": ["graphics", "rendering"]
+    },
+    "vkpbr5": {
+      "path": "misc/vkpbr5",
+      "owner": "coregfx-po",
+      "architect": "coregfx-architect",
+      "product": "coregfx",
+      "category": "misc",
+      "status": "active",
+      "tags": ["vulkan", "pbr", "graphics"]
+    },
+    "vulkan-grpc-renderer": {
+      "path": "misc/vulkan-grpc-renderer",
+      "owner": "coregfx-po",
+      "architect": "coregfx-architect",
+      "product": "coregfx",
+      "category": "misc",
+      "status": "active",
+      "tags": ["vulkan", "grpc", "rendering"]
+    },
+    "vulkan-playground": {
+      "path": "playground/vulkan-playground",
+      "owner": "coregfx-po",
+      "architect": "coregfx-architect",
+      "product": "coregfx",
+      "category": "playground",
+      "status": "active",
+      "tags": ["vulkan", "learning"]
+    },
+    "texturekit": {
+      "path": "misc/texturekit",
+      "owner": "coregfx-po",
+      "architect": "coregfx-architect",
+      "product": "coregfx",
+      "category": "misc",
+      "status": "active",
+      "tags": ["textures", "graphics"]
+    },
+    "cryo": {
+      "path": "cryo/cryo",
+      "owner": "cryo-po",
+      "architect": "cryo-architect",
+      "analyst": "cryo-ba",
+      "product": "cryo",
+      "category": "cryo",
+      "status": "active",
+      "tags": ["serialization", "core"]
+    },
+    "cryo-asset": {
+      "path": "cryo/cryo-asset",
+      "owner": "cryo-po",
+      "architect": "cryo-architect",
+      "product": "cryo",
+      "category": "cryo",
+      "status": "active",
+      "tags": ["assets", "serialization"]
+    },
+    "cryo-protocol": {
+      "path": "cryo/cryo-protocol",
+      "owner": "cryo-po",
+      "architect": "cryo-architect",
+      "product": "cryo",
+      "category": "cryo",
+      "status": "active",
+      "tags": ["grpc", "protocol"]
+    },
+    "cryo-engine-interface": {
+      "path": "cryo/cryo-engine-interface",
+      "owner": "cryo-po",
+      "architect": "cryo-architect",
+      "product": "cryo",
+      "category": "cryo",
+      "status": "active",
+      "tags": ["engine", "interface"]
+    },
+    "cryo-game-sdk": {
+      "path": "cryo/cryo-game-sdk",
+      "owner": "cryo-po",
+      "architect": "cryo-architect",
+      "product": "cryo",
+      "category": "cryo",
+      "status": "active",
+      "tags": ["game", "sdk"]
+    },
+    "cryojs": {
+      "path": "cryo/cryojs",
+      "owner": "cryo-po",
+      "architect": "cryo-architect",
+      "product": "cryo",
+      "category": "cryo",
+      "status": "active",
+      "tags": ["javascript", "client"]
+    },
+    "nuna-sdk-cpp": {
+      "path": "nuna/nuna-sdk-cpp",
+      "owner": "nuna-po",
+      "architect": "nuna-architect",
+      "analyst": "nuna-ba",
+      "product": "nuna",
+      "category": "nuna",
+      "status": "active",
+      "tags": ["audio", "sdk", "c++", "core"]
+    },
+    "nuna-backend-core": {
+      "path": "nuna/nuna-backend-core",
+      "owner": "nuna-po",
+      "architect": "nuna-architect",
+      "product": "nuna",
+      "category": "nuna",
+      "status": "active",
+      "tags": ["backend", "core"]
+    },
+    "nuna-backend-plugins": {
+      "path": "nuna/nuna-backend-plugins",
+      "owner": "nuna-po",
+      "architect": "nuna-architect",
+      "product": "nuna",
+      "category": "nuna",
+      "status": "active",
+      "tags": ["plugins", "backend"]
+    },
+    "nuna-docs": {
+      "path": "nuna/nuna-docs",
+      "owner": "nuna-po",
+      "architect": "nuna-architect",
+      "product": "nuna",
+      "category": "nuna",
+      "status": "active",
+      "tags": ["documentation"]
+    },
+    "nuna-web-platform": {
+      "path": "nuna/nuna-web-platform",
+      "owner": "nuna-po",
+      "architect": "nuna-architect",
+      "product": "nuna",
+      "category": "nuna",
+      "status": "active",
+      "tags": ["web", "platform"]
+    },
+    "arctic-engine": {
+      "path": "repos/arctic-engine",
+      "owner": "arctic-po",
+      "architect": "arctic-architect",
+      "analyst": "arctic-ba",
+      "product": "arctic",
+      "category": "repos",
+      "status": "active",
+      "tags": ["engine", "core"]
+    },
+    "arctic-game-client": {
+      "path": "arctic/arctic-game-client",
+      "owner": "arctic-po",
+      "architect": "arctic-architect",
+      "product": "arctic",
+      "category": "arctic",
+      "status": "active",
+      "tags": ["game", "client"]
+    },
+    "arctic-services": {
+      "path": "arctic/arctic-services",
+      "owner": "arctic-po",
+      "architect": "arctic-architect",
+      "product": "arctic",
+      "category": "arctic",
+      "status": "active",
+      "tags": ["services", "backend"]
+    },
+    "arctic-protocol": {
+      "path": "arctic/arctic-protocol",
+      "owner": "arctic-po",
+      "architect": "arctic-architect",
+      "product": "arctic",
+      "category": "arctic",
+      "status": "active",
+      "tags": ["protocol", "grpc"]
+    },
+    "chevp-mcp-suite": {
+      "path": "tools/chevp-mcp-suite",
+      "owner": "infra-architect",
+      "architect": "infra-architect",
+      "product": "infrastructure",
+      "category": "tools",
+      "status": "active",
+      "tags": ["mcp", "tooling", "orchestration"]
+    },
+    "che-cli": {
+      "path": "tools/che-cli",
+      "owner": "infra-architect",
+      "architect": "infra-architect",
+      "product": "infrastructure",
+      "category": "tools",
+      "status": "active",
+      "tags": ["cli", "tooling"]
+    },
+    "nexus-control": {
+      "path": "nexus/nexus-control",
+      "owner": "cto",
+      "architect": "infra-architect",
+      "product": "nexus",
+      "category": "nexus",
+      "status": "active",
+      "tags": ["platform", "control"]
+    },
+    "axon-runtime": {
+      "path": "axon/axon-runtime",
+      "owner": "cto",
+      "architect": "infra-architect",
+      "product": "axon",
+      "category": "axon",
+      "status": "active",
+      "tags": ["runtime", "platform"]
+    }
+  }
+}

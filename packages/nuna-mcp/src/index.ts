@@ -7,6 +7,11 @@ import { registerGetModule } from './tools/get-module.js';
 import { registerSearchModules } from './tools/search-modules.js';
 import { registerGetModuleApi } from './tools/get-module-api.js';
 import { registerGetModuleExamples } from './tools/get-module-examples.js';
+import {
+  registerCheckArchitecture,
+  registerListMigrationCandidates,
+  registerGetArchitectureRules,
+} from './tools/check-architecture.js';
 
 export function createServer(): McpServer {
   const __filename = fileURLToPath(import.meta.url);
@@ -28,12 +33,17 @@ export function createServer(): McpServer {
     version,
   });
 
-  // Register tool modules
+  // Register module documentation tools
   registerListModules(server);
   registerGetModule(server);
   registerSearchModules(server);
   registerGetModuleApi(server);
   registerGetModuleExamples(server);
+
+  // Register architecture governance tools
+  registerCheckArchitecture(server);
+  registerListMigrationCandidates(server);
+  registerGetArchitectureRules(server);
 
   return server;
 }

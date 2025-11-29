@@ -8,6 +8,7 @@
  * - Suggest fixes based on historical success rates
  * - Learn from successful fixes to improve suggestions
  * - Execute builds and auto-diagnose failures
+ * - Scan codebase for similar errors after fixing one
  */
 
 import fs from 'node:fs';
@@ -19,6 +20,7 @@ import { registerGetFix } from './tools/get-fix.js';
 import { registerLearnFix } from './tools/learn-fix.js';
 import { registerListPatterns } from './tools/list-patterns.js';
 import { registerRunBuild } from './tools/run-build.js';
+import { registerScanSimilar } from './tools/scan-similar.js';
 
 export function createServer(): McpServer {
   const __filename = fileURLToPath(import.meta.url);
@@ -46,6 +48,7 @@ export function createServer(): McpServer {
   registerLearnFix(server);
   registerListPatterns(server);
   registerRunBuild(server);
+  registerScanSimilar(server);
 
   return server;
 }

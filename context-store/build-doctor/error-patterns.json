@@ -1,0 +1,1635 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-11-29T10:04:14.204Z",
+  "patterns": {
+    "cmake-target-not-found": {
+      "id": "cmake-target-not-found",
+      "category": "cmake",
+      "regex": "CMake Error.*[Tt]arget \"([^\"]+)\" (?:was )?not found",
+      "extractors": {
+        "target": "$1"
+      },
+      "description": "CMake cannot find a referenced target",
+      "commonCauses": [
+        "Target defined in a CMakeLists.txt that was not added via add_subdirectory()",
+        "Typo in target name",
+        "Missing add_subdirectory() call for the directory containing the target",
+        "Target defined after it is referenced"
+      ],
+      "fixes": [
+        {
+          "id": "add-subdirectory",
+          "description": "Add missing add_subdirectory() for the target",
+          "type": "cmake_change",
+          "steps": [
+            "Search for CMakeLists.txt containing 'add_library(${target}' or 'add_executable(${target}'",
+            "Add add_subdirectory(path/to/target/dir) in the parent CMakeLists.txt before the reference"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "fix-target-typo",
+          "description": "Fix typo in target name",
+          "type": "cmake_change",
+          "steps": [
+            "Search for similar target names in the project",
+            "Correct the target name in target_link_libraries() or add_dependencies()"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "cmake-package-not-found": {
+      "id": "cmake-package-not-found",
+      "category": "cmake",
+      "regex": "CMake Error.*Could (?:NOT|not) find (?:a )?package.*\"?([A-Za-z0-9_-]+)\"?",
+      "extractors": {
+        "package": "$1"
+      },
+      "description": "CMake cannot find a required package",
+      "commonCauses": [
+        "Package is not installed on the system",
+        "Package is installed but not in CMAKE_PREFIX_PATH",
+        "vcpkg/Conan package not installed",
+        "Wrong package name (case sensitive)"
+      ],
+      "fixes": [
+        {
+          "id": "install-vcpkg-package",
+          "description": "Install package via vcpkg",
+          "type": "dependency",
+          "steps": [
+            "Run: vcpkg install ${package}",
+            "Ensure CMAKE_TOOLCHAIN_FILE points to vcpkg.cmake"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "add-cmake-prefix-path",
+          "description": "Add package location to CMAKE_PREFIX_PATH",
+          "type": "cmake_change",
+          "steps": [
+            "Find where the package is installed",
+            "Add -DCMAKE_PREFIX_PATH=/path/to/package to cmake command",
+            "Or set CMAKE_PREFIX_PATH environment variable"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "cmake-syntax-error": {
+      "id": "cmake-syntax-error",
+      "category": "cmake",
+      "regex": "CMake Error at ([^:]+):(\\d+)",
+      "extractors": {
+        "file": "$1",
+        "line": "$2"
+      },
+      "description": "Syntax error in CMakeLists.txt",
+      "commonCauses": [
+        "Missing closing parenthesis",
+        "Unquoted string with spaces",
+        "Invalid command name",
+        "Missing argument"
+      ],
+      "fixes": [
+        {
+          "id": "check-syntax",
+          "description": "Check CMake syntax at the specified line",
+          "type": "file_edit",
+          "steps": [
+            "Open ${file} at line ${line}",
+            "Check for missing parentheses, quotes, or arguments",
+            "Verify command name spelling"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 1,
+      "lastSeen": "2025-11-29T10:04:14.198Z",
+      "successRate": 0
+    },
+    "cmake-version-required": {
+      "id": "cmake-version-required",
+      "category": "cmake",
+      "regex": "CMake (\\d+\\.\\d+(?:\\.\\d+)?) or higher is required",
+      "extractors": {
+        "version": "$1"
+      },
+      "description": "CMake version is too old",
+      "commonCauses": [
+        "System CMake is outdated",
+        "Project requires newer CMake features"
+      ],
+      "fixes": [
+        {
+          "id": "upgrade-cmake",
+          "description": "Upgrade CMake to required version",
+          "type": "manual",
+          "steps": [
+            "Download CMake ${version} or newer from cmake.org",
+            "Or use: choco upgrade cmake (Windows)",
+            "Or use: brew upgrade cmake (macOS)"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "lower-cmake-requirement",
+          "description": "Lower the cmake_minimum_required version",
+          "type": "cmake_change",
+          "steps": [
+            "Check if newer CMake features are actually used",
+            "If not, lower cmake_minimum_required() to match installed version"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "cmake-add-subdirectory-missing": {
+      "id": "cmake-add-subdirectory-missing",
+      "category": "cmake",
+      "regex": "add_subdirectory.*does not contain a CMakeLists\\.txt",
+      "description": "Subdirectory does not contain CMakeLists.txt",
+      "commonCauses": [
+        "Wrong directory path in add_subdirectory()",
+        "CMakeLists.txt was not created in the subdirectory",
+        "Directory does not exist"
+      ],
+      "fixes": [
+        {
+          "id": "create-cmakelists",
+          "description": "Create CMakeLists.txt in the subdirectory",
+          "type": "file_edit",
+          "steps": [
+            "Create a new CMakeLists.txt file in the referenced subdirectory",
+            "Add appropriate add_library() or add_executable() commands"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "fix-subdirectory-path",
+          "description": "Fix the subdirectory path",
+          "type": "cmake_change",
+          "steps": [
+            "Verify the directory path exists",
+            "Correct the path in add_subdirectory() if needed"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "cmake-generator-mismatch": {
+      "id": "cmake-generator-mismatch",
+      "category": "cmake",
+      "regex": "CMAKE_GENERATOR.*does not match.*generator",
+      "description": "CMake generator mismatch in build directory",
+      "commonCauses": [
+        "Trying to use different generator than initially configured",
+        "Build directory was configured with different Visual Studio version"
+      ],
+      "fixes": [
+        {
+          "id": "clear-build-dir",
+          "description": "Clear build directory and reconfigure",
+          "type": "manual",
+          "steps": [
+            "Delete the build directory (or its CMakeCache.txt)",
+            "Re-run cmake with the desired generator"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "cmake-policy-warning": {
+      "id": "cmake-policy-warning",
+      "category": "cmake",
+      "regex": "CMake Warning.*Policy (CMP\\d+)",
+      "extractors": {
+        "policy": "$1"
+      },
+      "description": "CMake policy warning",
+      "commonCauses": [
+        "Using deprecated CMake behavior",
+        "cmake_minimum_required is set too low"
+      ],
+      "fixes": [
+        {
+          "id": "set-policy",
+          "description": "Set the CMake policy explicitly",
+          "type": "cmake_change",
+          "steps": [
+            "Add cmake_policy(SET ${policy} NEW) after cmake_minimum_required()",
+            "Or update cmake_minimum_required() to a version where the policy defaults to NEW"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "cmake-source-not-found": {
+      "id": "cmake-source-not-found",
+      "category": "cmake",
+      "regex": "Cannot find source file:\\s*([^\\s]+)",
+      "extractors": {
+        "file": "$1"
+      },
+      "description": "Source file listed in CMakeLists.txt does not exist",
+      "commonCauses": [
+        "File was renamed or moved",
+        "Typo in filename",
+        "File was deleted but not removed from CMakeLists.txt"
+      ],
+      "fixes": [
+        {
+          "id": "remove-source",
+          "description": "Remove the missing source file from CMakeLists.txt",
+          "type": "cmake_change",
+          "steps": [
+            "Find the add_library() or add_executable() containing ${file}",
+            "Remove ${file} from the source list"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "create-source",
+          "description": "Create the missing source file",
+          "type": "file_edit",
+          "steps": [
+            "Create the file ${file}",
+            "Add appropriate content based on other files in the project"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "cmake-include-not-found": {
+      "id": "cmake-include-not-found",
+      "category": "cmake",
+      "regex": "include could not find.*file:\\s*([^\\s]+)",
+      "extractors": {
+        "file": "$1"
+      },
+      "description": "CMake include() file not found",
+      "commonCauses": [
+        "Module path not set correctly",
+        "File path is wrong",
+        "Custom CMake module not installed"
+      ],
+      "fixes": [
+        {
+          "id": "add-module-path",
+          "description": "Add directory to CMAKE_MODULE_PATH",
+          "type": "cmake_change",
+          "steps": [
+            "Find where ${file} is located",
+            "Add list(APPEND CMAKE_MODULE_PATH /path/to/modules) before include()"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "cmake-variable-not-set": {
+      "id": "cmake-variable-not-set",
+      "category": "cmake",
+      "regex": "CMake Error:.*variable.*\"([^\"]+)\".*not set",
+      "extractors": {
+        "variable": "$1"
+      },
+      "description": "Required CMake variable is not set",
+      "commonCauses": [
+        "Missing -D flag in cmake command",
+        "Dependency not found that should set the variable",
+        "find_package() failed silently"
+      ],
+      "fixes": [
+        {
+          "id": "set-variable",
+          "description": "Set the variable in cmake command",
+          "type": "cmake_change",
+          "steps": [
+            "Add -D${variable}=/path/or/value to cmake command"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "msvc-c2065-undeclared": {
+      "id": "msvc-c2065-undeclared",
+      "category": "compiler",
+      "compiler": "msvc",
+      "regex": "error C2065:\\s*'([^']+)'\\s*:\\s*undeclared identifier",
+      "extractors": {
+        "identifier": "$1"
+      },
+      "description": "Undeclared identifier - symbol not found",
+      "commonCauses": [
+        "Missing #include for the header that declares the symbol",
+        "Typo in variable/function name",
+        "Symbol is in a different namespace",
+        "Missing using directive or namespace qualification"
+      ],
+      "fixes": [
+        {
+          "id": "add-include",
+          "description": "Add missing #include directive",
+          "type": "file_edit",
+          "steps": [
+            "Search for header file that declares ${identifier}",
+            "Add #include \"header.h\" or #include <header> at top of file"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "add-namespace",
+          "description": "Add namespace qualification",
+          "type": "file_edit",
+          "steps": [
+            "Check which namespace ${identifier} belongs to",
+            "Add namespace::${identifier} or using namespace directive"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 1,
+      "lastSeen": "2025-11-29T10:04:14.202Z",
+      "successRate": 0
+    },
+    "msvc-c2079-undefined-class": {
+      "id": "msvc-c2079-undefined-class",
+      "category": "compiler",
+      "compiler": "msvc",
+      "regex": "error C2079:\\s*'([^']+)'\\s*uses undefined (?:class|struct)\\s*'([^']+)'",
+      "extractors": {
+        "variable": "$1",
+        "type": "$2"
+      },
+      "description": "Using undefined class/struct (forward declaration not sufficient)",
+      "commonCauses": [
+        "Only forward declaration exists, full definition needed",
+        "Header with class definition not included",
+        "Circular dependency issue"
+      ],
+      "fixes": [
+        {
+          "id": "include-full-definition",
+          "description": "Include header with full class definition",
+          "type": "file_edit",
+          "steps": [
+            "Find the header that fully defines ${type}",
+            "Replace forward declaration with #include"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "use-pointer",
+          "description": "Use pointer/reference instead of value type",
+          "type": "file_edit",
+          "steps": [
+            "Change ${type} ${variable} to ${type}* ${variable} or std::unique_ptr<${type}>",
+            "This allows using forward declaration"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "msvc-c2143-syntax-missing": {
+      "id": "msvc-c2143-syntax-missing",
+      "category": "compiler",
+      "compiler": "msvc",
+      "regex": "error C2143:\\s*syntax error\\s*:\\s*missing\\s*'([^']+)'",
+      "extractors": {
+        "token": "$1"
+      },
+      "description": "Syntax error - missing token",
+      "commonCauses": [
+        "Missing semicolon at end of statement",
+        "Missing closing brace, parenthesis, or bracket",
+        "Missing comma in parameter list"
+      ],
+      "fixes": [
+        {
+          "id": "add-missing-token",
+          "description": "Add the missing token",
+          "type": "file_edit",
+          "steps": [
+            "Look at the line number in the error",
+            "Check the previous line - often the missing '${token}' belongs there",
+            "Add ${token} at the appropriate location"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "msvc-c2039-not-member": {
+      "id": "msvc-c2039-not-member",
+      "category": "compiler",
+      "compiler": "msvc",
+      "regex": "error C2039:\\s*'([^']+)'\\s*:\\s*is not a member of\\s*'([^']+)'",
+      "extractors": {
+        "member": "$1",
+        "type": "$2"
+      },
+      "description": "Member not found in class/struct",
+      "commonCauses": [
+        "Typo in member name",
+        "Member is private/protected",
+        "Using wrong overload or template specialization",
+        "Header version mismatch"
+      ],
+      "fixes": [
+        {
+          "id": "check-member-name",
+          "description": "Verify member name spelling",
+          "type": "manual",
+          "steps": [
+            "Open the header defining ${type}",
+            "Find the correct member name (may be different case or spelling)",
+            "Update the code to use correct member name"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "msvc-c2664-cannot-convert": {
+      "id": "msvc-c2664-cannot-convert",
+      "category": "compiler",
+      "compiler": "msvc",
+      "regex": "error C2664:\\s*'([^']+)'\\s*:\\s*cannot convert argument (\\d+) from\\s*'([^']+)'\\s*to\\s*'([^']+)'",
+      "extractors": {
+        "function": "$1",
+        "argNum": "$2",
+        "fromType": "$3",
+        "toType": "$4"
+      },
+      "description": "Cannot convert argument type",
+      "commonCauses": [
+        "Passing wrong type to function",
+        "Missing const qualifier",
+        "Implicit conversion not available",
+        "Unicode/ANSI string mismatch"
+      ],
+      "fixes": [
+        {
+          "id": "add-cast",
+          "description": "Add explicit type conversion",
+          "type": "file_edit",
+          "steps": [
+            "For argument ${argNum}, convert from ${fromType} to ${toType}",
+            "Use static_cast<${toType}>(arg) or appropriate conversion function"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "fix-const",
+          "description": "Fix const-correctness",
+          "type": "file_edit",
+          "steps": [
+            "If ${toType} has const and ${fromType} does not, the variable may need to be const",
+            "Or use const_cast<> if semantically correct"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "msvc-c2512-no-default-constructor": {
+      "id": "msvc-c2512-no-default-constructor",
+      "category": "compiler",
+      "compiler": "msvc",
+      "regex": "error C2512:\\s*'([^']+)'\\s*:\\s*no appropriate default constructor available",
+      "extractors": {
+        "type": "$1"
+      },
+      "description": "No default constructor available",
+      "commonCauses": [
+        "Class has user-defined constructor but no default constructor",
+        "Member requires initialization",
+        "Base class has no default constructor"
+      ],
+      "fixes": [
+        {
+          "id": "add-default-constructor",
+          "description": "Add default constructor to class",
+          "type": "file_edit",
+          "steps": [
+            "Add ${type}() = default; to the class definition",
+            "Or provide a constructor with default arguments"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "use-initializer",
+          "description": "Use member initializer list",
+          "type": "file_edit",
+          "steps": [
+            "Initialize the member using constructor initializer list",
+            "Example: MyClass() : member(value) {}"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "msvc-c2440-cannot-convert-init": {
+      "id": "msvc-c2440-cannot-convert-init",
+      "category": "compiler",
+      "compiler": "msvc",
+      "regex": "error C2440:\\s*'([^']+)'\\s*:\\s*cannot convert from\\s*'([^']+)'\\s*to\\s*'([^']+)'",
+      "extractors": {
+        "context": "$1",
+        "fromType": "$2",
+        "toType": "$3"
+      },
+      "description": "Cannot convert types in initialization/assignment",
+      "commonCauses": [
+        "Incompatible pointer types",
+        "Narrowing conversion in initialization",
+        "Missing conversion operator"
+      ],
+      "fixes": [
+        {
+          "id": "explicit-conversion",
+          "description": "Add explicit conversion",
+          "type": "file_edit",
+          "steps": [
+            "Use static_cast, dynamic_cast, or reinterpret_cast as appropriate",
+            "Convert from ${fromType} to ${toType}"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "msvc-c2248-private-member": {
+      "id": "msvc-c2248-private-member",
+      "category": "compiler",
+      "compiler": "msvc",
+      "regex": "error C2248:\\s*'([^']+)'\\s*:\\s*cannot access (private|protected) member",
+      "extractors": {
+        "member": "$1",
+        "access": "$2"
+      },
+      "description": "Cannot access private/protected member",
+      "commonCauses": [
+        "Trying to access private member from outside class",
+        "Missing friend declaration",
+        "Need to use public accessor method"
+      ],
+      "fixes": [
+        {
+          "id": "use-accessor",
+          "description": "Use public accessor method",
+          "type": "file_edit",
+          "steps": [
+            "Find or create a public getter/setter for ${member}",
+            "Use the accessor instead of direct member access"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "add-friend",
+          "description": "Add friend declaration",
+          "type": "file_edit",
+          "steps": [
+            "Add friend class/function declaration in the class definition",
+            "This grants access to ${access} members"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "msvc-c2059-syntax-error": {
+      "id": "msvc-c2059-syntax-error",
+      "category": "compiler",
+      "compiler": "msvc",
+      "regex": "error C2059:\\s*syntax error\\s*:\\s*'([^']+)'",
+      "extractors": {
+        "token": "$1"
+      },
+      "description": "General syntax error",
+      "commonCauses": [
+        "Unexpected token in code",
+        "Macro expansion issue",
+        "Missing preprocessor include guard causing redefinition"
+      ],
+      "fixes": [
+        {
+          "id": "check-syntax",
+          "description": "Check syntax around the error location",
+          "type": "manual",
+          "steps": [
+            "Look at the line with '${token}'",
+            "Check for missing braces, semicolons, or operators",
+            "Check if a macro is expanding incorrectly"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "msvc-c2061-syntax-identifier": {
+      "id": "msvc-c2061-syntax-identifier",
+      "category": "compiler",
+      "compiler": "msvc",
+      "regex": "error C2061:\\s*syntax error\\s*:\\s*identifier\\s*'([^']+)'",
+      "extractors": {
+        "identifier": "$1"
+      },
+      "description": "Syntax error with identifier",
+      "commonCauses": [
+        "Missing type declaration or forward declaration",
+        "Typo in type name",
+        "Missing #include for type definition"
+      ],
+      "fixes": [
+        {
+          "id": "add-forward-declaration",
+          "description": "Add forward declaration",
+          "type": "file_edit",
+          "steps": [
+            "Add class ${identifier}; or struct ${identifier}; before use",
+            "Or include the header that defines ${identifier}"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "msvc-lnk2019-unresolved": {
+      "id": "msvc-lnk2019-unresolved",
+      "category": "linker",
+      "compiler": "msvc",
+      "regex": "error LNK2019:\\s*unresolved external symbol\\s*\"?([^\"]+)\"?\\s*referenced in function\\s*\"?([^\"]+)\"?",
+      "extractors": {
+        "symbol": "$1",
+        "function": "$2"
+      },
+      "description": "Unresolved external symbol - linker cannot find symbol definition",
+      "commonCauses": [
+        "Source file containing definition not compiled/linked",
+        "Library not linked",
+        "Function declared but not defined",
+        "Name mangling mismatch (extern \"C\" missing)",
+        "Static library not linked"
+      ],
+      "fixes": [
+        {
+          "id": "add-source-to-target",
+          "description": "Add source file to CMake target",
+          "type": "cmake_change",
+          "steps": [
+            "Find the .cpp file that defines ${symbol}",
+            "Add it to the target_sources() or add_library()/add_executable() in CMakeLists.txt"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "link-library",
+          "description": "Link required library",
+          "type": "cmake_change",
+          "steps": [
+            "Find which library provides ${symbol}",
+            "Add target_link_libraries(your_target PRIVATE library_name)"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "implement-function",
+          "description": "Implement the missing function",
+          "type": "file_edit",
+          "steps": [
+            "The function ${symbol} is declared but not defined",
+            "Add the implementation in an appropriate .cpp file"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 1,
+      "lastSeen": "2025-11-29T10:04:14.204Z",
+      "successRate": 0
+    },
+    "msvc-lnk2001-unresolved": {
+      "id": "msvc-lnk2001-unresolved",
+      "category": "linker",
+      "compiler": "msvc",
+      "regex": "error LNK2001:\\s*unresolved external symbol\\s*\"?([^\"]+)\"?",
+      "extractors": {
+        "symbol": "$1"
+      },
+      "description": "Unresolved external symbol (static member or vtable)",
+      "commonCauses": [
+        "Static class member declared but not defined",
+        "Pure virtual function not implemented in derived class",
+        "Virtual destructor not defined",
+        "Missing library dependency"
+      ],
+      "fixes": [
+        {
+          "id": "define-static-member",
+          "description": "Define static member variable",
+          "type": "file_edit",
+          "steps": [
+            "Add definition: Type ClassName::memberName; in a .cpp file",
+            "Or for inline static in C++17: inline static Type memberName{};"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "implement-virtual",
+          "description": "Implement virtual function",
+          "type": "file_edit",
+          "steps": [
+            "Check if ${symbol} is a virtual function",
+            "Implement the function in the derived class"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "msvc-lnk1120-unresolved-count": {
+      "id": "msvc-lnk1120-unresolved-count",
+      "category": "linker",
+      "compiler": "msvc",
+      "regex": "error LNK1120:\\s*(\\d+)\\s*unresolved externals?",
+      "extractors": {
+        "count": "$1"
+      },
+      "description": "Multiple unresolved external symbols",
+      "commonCauses": [
+        "Multiple missing definitions",
+        "Library not linked",
+        "Object files not included in link"
+      ],
+      "fixes": [
+        {
+          "id": "resolve-all",
+          "description": "Resolve individual LNK2019/LNK2001 errors above",
+          "type": "manual",
+          "steps": [
+            "Look at the LNK2019 or LNK2001 errors above this one",
+            "Each one tells you which symbol is missing",
+            "Fix them individually - this error will disappear"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "msvc-lnk1104-cannot-open": {
+      "id": "msvc-lnk1104-cannot-open",
+      "category": "linker",
+      "compiler": "msvc",
+      "regex": "error LNK1104:\\s*cannot open file\\s*'([^']+)'",
+      "extractors": {
+        "file": "$1"
+      },
+      "description": "Cannot open file during linking",
+      "commonCauses": [
+        "Library file does not exist",
+        "Library path not in linker search path",
+        "File is locked by another process",
+        "Antivirus blocking access"
+      ],
+      "fixes": [
+        {
+          "id": "add-library-path",
+          "description": "Add library directory to search path",
+          "type": "cmake_change",
+          "steps": [
+            "Use target_link_directories() or link_directories() in CMakeLists.txt",
+            "Or use full path to ${file} in target_link_libraries()"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "install-library",
+          "description": "Install missing library",
+          "type": "dependency",
+          "steps": [
+            "Install the library that provides ${file}",
+            "For vcpkg: vcpkg install <package>",
+            "Ensure vcpkg toolchain file is used"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "msvc-lnk2005-already-defined": {
+      "id": "msvc-lnk2005-already-defined",
+      "category": "linker",
+      "compiler": "msvc",
+      "regex": "error LNK2005:\\s*\"?([^\"]+)\"?\\s*already defined in\\s*([^\\s]+)",
+      "extractors": {
+        "symbol": "$1",
+        "object": "$2"
+      },
+      "description": "Symbol already defined in another object file",
+      "commonCauses": [
+        "Function defined in header without inline",
+        "Global variable defined in header",
+        "Same source file compiled twice",
+        "Static library linked multiple times"
+      ],
+      "fixes": [
+        {
+          "id": "make-inline",
+          "description": "Make function inline",
+          "type": "file_edit",
+          "steps": [
+            "If ${symbol} is a function defined in a header, add inline keyword",
+            "Or move definition to a .cpp file"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "extern-variable",
+          "description": "Use extern for global variable",
+          "type": "file_edit",
+          "steps": [
+            "In header: extern Type varName;",
+            "In one .cpp: Type varName = value;"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "msvc-lnk1169-multiple-symbols": {
+      "id": "msvc-lnk1169-multiple-symbols",
+      "category": "linker",
+      "compiler": "msvc",
+      "regex": "error LNK1169:\\s*one or more multiply defined symbols found",
+      "description": "Multiple symbol definition errors",
+      "commonCauses": [
+        "Multiple LNK2005 errors above",
+        "Same symbol defined in multiple translation units"
+      ],
+      "fixes": [
+        {
+          "id": "fix-lnk2005",
+          "description": "Fix the LNK2005 errors above",
+          "type": "manual",
+          "steps": [
+            "Look at the LNK2005 errors above this one",
+            "Each one tells you which symbol is multiply defined",
+            "Make functions inline or use extern for variables"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "msvc-c4996-deprecated": {
+      "id": "msvc-c4996-deprecated",
+      "category": "compiler",
+      "compiler": "msvc",
+      "regex": "(?:error|warning) C4996:\\s*'([^']+)'.*(?:deprecated|was declared deprecated)",
+      "extractors": {
+        "function": "$1"
+      },
+      "description": "Deprecated function/feature used",
+      "commonCauses": [
+        "Using deprecated C runtime functions",
+        "Using deprecated STL features",
+        "Using functions marked [[deprecated]]"
+      ],
+      "fixes": [
+        {
+          "id": "use-safe-version",
+          "description": "Use the safe/modern version",
+          "type": "file_edit",
+          "steps": [
+            "Replace ${function} with its _s (safe) version if available",
+            "Or use modern C++ equivalent (e.g., std::string instead of strcpy)"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "disable-warning",
+          "description": "Disable deprecation warning (not recommended)",
+          "type": "cmake_change",
+          "steps": [
+            "Add _CRT_SECURE_NO_WARNINGS to preprocessor definitions",
+            "Or use #pragma warning(disable: 4996) locally"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "gcc-undeclared-identifier": {
+      "id": "gcc-undeclared-identifier",
+      "category": "compiler",
+      "compiler": "gcc",
+      "regex": "error:\\s*'([^']+)'\\s*(?:was not declared|undeclared)\\s*(?:in this scope)?",
+      "extractors": {
+        "identifier": "$1"
+      },
+      "description": "Undeclared identifier",
+      "commonCauses": [
+        "Missing #include directive",
+        "Typo in identifier name",
+        "Missing namespace qualification",
+        "Identifier defined after use"
+      ],
+      "fixes": [
+        {
+          "id": "add-include",
+          "description": "Add missing #include directive",
+          "type": "file_edit",
+          "steps": [
+            "Search for header file declaring ${identifier}",
+            "Add #include \"header.h\" or #include <header>"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "add-namespace",
+          "description": "Add namespace qualification",
+          "type": "file_edit",
+          "steps": [
+            "Check which namespace ${identifier} belongs to",
+            "Use namespace::${identifier} or add using directive"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "gcc-no-member": {
+      "id": "gcc-no-member",
+      "category": "compiler",
+      "compiler": "gcc",
+      "regex": "error:\\s*(?:'([^']+)'\\s*)?(?:class|struct)\\s*'([^']+)'\\s*has no member named\\s*'([^']+)'",
+      "extractors": {
+        "context": "$1",
+        "type": "$2",
+        "member": "$3"
+      },
+      "description": "No member with given name in class/struct",
+      "commonCauses": [
+        "Typo in member name",
+        "Member is private (different error usually)",
+        "Using wrong type or overload",
+        "Member was renamed or removed"
+      ],
+      "fixes": [
+        {
+          "id": "check-member",
+          "description": "Check correct member name",
+          "type": "manual",
+          "steps": [
+            "Open header defining ${type}",
+            "Find correct member name",
+            "Update code to use correct name"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "gcc-expected-token": {
+      "id": "gcc-expected-token",
+      "category": "compiler",
+      "compiler": "gcc",
+      "regex": "error:\\s*expected\\s*'([^']+)'\\s*(?:before|after)?\\s*'?([^']*)'?",
+      "extractors": {
+        "expected": "$1",
+        "context": "$2"
+      },
+      "description": "Expected token not found",
+      "commonCauses": [
+        "Missing semicolon",
+        "Missing closing brace/parenthesis",
+        "Syntax error in previous line"
+      ],
+      "fixes": [
+        {
+          "id": "add-token",
+          "description": "Add expected token",
+          "type": "file_edit",
+          "steps": [
+            "Add '${expected}' at appropriate location",
+            "Check previous line for missing semicolon"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "gcc-incomplete-type": {
+      "id": "gcc-incomplete-type",
+      "category": "compiler",
+      "compiler": "gcc",
+      "regex": "error:\\s*(?:invalid use of )?incomplete type\\s*'(?:class|struct)?\\s*([^']+)'",
+      "extractors": {
+        "type": "$1"
+      },
+      "description": "Using incomplete (forward-declared) type",
+      "commonCauses": [
+        "Only forward declaration available",
+        "Header with full definition not included",
+        "Circular dependency"
+      ],
+      "fixes": [
+        {
+          "id": "include-definition",
+          "description": "Include full type definition",
+          "type": "file_edit",
+          "steps": [
+            "Include header that fully defines ${type}",
+            "Replace forward declaration with #include"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "use-pointer",
+          "description": "Use pointer/reference instead",
+          "type": "file_edit",
+          "steps": [
+            "Change ${type} value to ${type}* pointer",
+            "Forward declaration works with pointers/references"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "gcc-no-matching-function": {
+      "id": "gcc-no-matching-function",
+      "category": "compiler",
+      "compiler": "gcc",
+      "regex": "error:\\s*no matching function for call to\\s*'([^']+)'",
+      "extractors": {
+        "function": "$1"
+      },
+      "description": "No matching function found for call",
+      "commonCauses": [
+        "Wrong argument types",
+        "Wrong number of arguments",
+        "Function is template and cannot deduce types",
+        "Function does not exist"
+      ],
+      "fixes": [
+        {
+          "id": "check-signature",
+          "description": "Check function signature",
+          "type": "manual",
+          "steps": [
+            "Look at available overloads (shown in error)",
+            "Match argument types to expected parameters",
+            "Add explicit template arguments if needed"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "add-conversion",
+          "description": "Add type conversion",
+          "type": "file_edit",
+          "steps": [
+            "Convert arguments to expected types",
+            "Use static_cast or constructor conversion"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "gcc-cannot-convert": {
+      "id": "gcc-cannot-convert",
+      "category": "compiler",
+      "compiler": "gcc",
+      "regex": "error:\\s*cannot convert\\s*'([^']+)'\\s*to\\s*'([^']+)'",
+      "extractors": {
+        "fromType": "$1",
+        "toType": "$2"
+      },
+      "description": "Type conversion not possible",
+      "commonCauses": [
+        "Incompatible types",
+        "Missing conversion operator",
+        "const/volatile mismatch"
+      ],
+      "fixes": [
+        {
+          "id": "add-cast",
+          "description": "Add explicit cast",
+          "type": "file_edit",
+          "steps": [
+            "Use static_cast<${toType}>(value)",
+            "Or implement conversion operator/constructor"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "gcc-redefinition": {
+      "id": "gcc-redefinition",
+      "category": "compiler",
+      "compiler": "gcc",
+      "regex": "error:\\s*redefinition of\\s*'([^']+)'",
+      "extractors": {
+        "symbol": "$1"
+      },
+      "description": "Symbol redefined",
+      "commonCauses": [
+        "Same header included multiple times without guards",
+        "Function/variable defined in header without inline/extern",
+        "Copy-paste error"
+      ],
+      "fixes": [
+        {
+          "id": "add-include-guard",
+          "description": "Add include guards to header",
+          "type": "file_edit",
+          "steps": [
+            "Add #pragma once at top of header",
+            "Or use #ifndef/#define/#endif guards"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "make-inline",
+          "description": "Make function inline",
+          "type": "file_edit",
+          "steps": [
+            "If ${symbol} is a function in header, add inline keyword",
+            "Or move definition to .cpp file"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "clang-unknown-type": {
+      "id": "clang-unknown-type",
+      "category": "compiler",
+      "compiler": "clang",
+      "regex": "error:\\s*unknown type name\\s*'([^']+)'",
+      "extractors": {
+        "type": "$1"
+      },
+      "description": "Unknown type name",
+      "commonCauses": [
+        "Missing #include for type definition",
+        "Missing forward declaration",
+        "Typo in type name"
+      ],
+      "fixes": [
+        {
+          "id": "add-include",
+          "description": "Add #include for type",
+          "type": "file_edit",
+          "steps": [
+            "Find header that defines ${type}",
+            "Add appropriate #include directive"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "gcc-undefined-reference": {
+      "id": "gcc-undefined-reference",
+      "category": "linker",
+      "compiler": "gcc",
+      "regex": "undefined reference to\\s*[`']([^'`]+)[`']",
+      "extractors": {
+        "symbol": "$1"
+      },
+      "description": "Undefined reference - linker cannot find symbol",
+      "commonCauses": [
+        "Source file not compiled/linked",
+        "Library not linked",
+        "Function declared but not defined",
+        "Name mangling issue (missing extern \"C\")"
+      ],
+      "fixes": [
+        {
+          "id": "add-source",
+          "description": "Add source file to build",
+          "type": "cmake_change",
+          "steps": [
+            "Find .cpp file that defines ${symbol}",
+            "Add it to target_sources() or add_library()/add_executable()"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "link-library",
+          "description": "Link required library",
+          "type": "cmake_change",
+          "steps": [
+            "Find library that provides ${symbol}",
+            "Add target_link_libraries(target PRIVATE library)"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "implement-function",
+          "description": "Implement the function",
+          "type": "file_edit",
+          "steps": [
+            "${symbol} is declared but not defined",
+            "Add implementation in a .cpp file"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "gcc-multiple-definition": {
+      "id": "gcc-multiple-definition",
+      "category": "linker",
+      "compiler": "gcc",
+      "regex": "multiple definition of\\s*[`']([^'`]+)[`']",
+      "extractors": {
+        "symbol": "$1"
+      },
+      "description": "Symbol defined multiple times",
+      "commonCauses": [
+        "Function defined in header without inline",
+        "Global variable defined in header",
+        "Same file compiled/linked twice"
+      ],
+      "fixes": [
+        {
+          "id": "make-inline",
+          "description": "Make function inline",
+          "type": "file_edit",
+          "steps": [
+            "Add inline keyword to ${symbol} if defined in header",
+            "Or move definition to single .cpp file"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "extern-variable",
+          "description": "Use extern for global variable",
+          "type": "file_edit",
+          "steps": [
+            "Header: extern Type ${symbol};",
+            "Single .cpp: Type ${symbol} = value;"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "gcc-library-not-found": {
+      "id": "gcc-library-not-found",
+      "category": "linker",
+      "compiler": "gcc",
+      "regex": "cannot find -l([a-zA-Z0-9_-]+)",
+      "extractors": {
+        "library": "$1"
+      },
+      "description": "Library not found",
+      "commonCauses": [
+        "Library not installed",
+        "Library path not in search path",
+        "Wrong library name"
+      ],
+      "fixes": [
+        {
+          "id": "install-library",
+          "description": "Install the library",
+          "type": "dependency",
+          "steps": [
+            "Install lib${library}-dev package (Debian/Ubuntu)",
+            "Or ${library}-devel (Fedora/RHEL)",
+            "Or use vcpkg: vcpkg install ${library}"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "add-library-path",
+          "description": "Add library search path",
+          "type": "cmake_change",
+          "steps": [
+            "Use target_link_directories() or link_directories()",
+            "Or set CMAKE_LIBRARY_PATH"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "ld-file-not-recognized": {
+      "id": "ld-file-not-recognized",
+      "category": "linker",
+      "compiler": "gcc",
+      "regex": "([^:]+):\\s*file not recognized:\\s*(.+)",
+      "extractors": {
+        "file": "$1",
+        "reason": "$2"
+      },
+      "description": "Linker cannot recognize file format",
+      "commonCauses": [
+        "Trying to link incompatible object file",
+        "Object file corrupted or truncated",
+        "Wrong architecture (32 vs 64 bit)"
+      ],
+      "fixes": [
+        {
+          "id": "rebuild-object",
+          "description": "Rebuild the object file",
+          "type": "manual",
+          "steps": [
+            "Delete ${file} and rebuild",
+            "Ensure consistent compiler flags",
+            "Check architecture matches (-m32/-m64)"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "gcc-vtable-undefined": {
+      "id": "gcc-vtable-undefined",
+      "category": "linker",
+      "compiler": "gcc",
+      "regex": "undefined reference to\\s*[`']vtable for ([^'`]+)[`']",
+      "extractors": {
+        "class": "$1"
+      },
+      "description": "Vtable undefined - virtual function not implemented",
+      "commonCauses": [
+        "Pure virtual function not implemented in derived class",
+        "Virtual destructor declared but not defined",
+        "First virtual function not defined"
+      ],
+      "fixes": [
+        {
+          "id": "implement-virtual",
+          "description": "Implement virtual functions",
+          "type": "file_edit",
+          "steps": [
+            "Check ${class} for virtual functions without definitions",
+            "Implement all pure virtual functions from base class",
+            "Ensure virtual destructor is defined (not just declared)"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "gcc-typeinfo-undefined": {
+      "id": "gcc-typeinfo-undefined",
+      "category": "linker",
+      "compiler": "gcc",
+      "regex": "undefined reference to\\s*[`']typeinfo for ([^'`]+)[`']",
+      "extractors": {
+        "class": "$1"
+      },
+      "description": "Typeinfo undefined - RTTI issue",
+      "commonCauses": [
+        "Class has virtual functions but no defined virtual destructor",
+        "Mixing RTTI enabled/disabled code",
+        "Library compiled without RTTI"
+      ],
+      "fixes": [
+        {
+          "id": "define-destructor",
+          "description": "Define virtual destructor",
+          "type": "file_edit",
+          "steps": [
+            "Add virtual ~${class}() = default; in header",
+            "Or define destructor in .cpp file"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        },
+        {
+          "id": "enable-rtti",
+          "description": "Enable RTTI consistently",
+          "type": "cmake_change",
+          "steps": [
+            "Ensure -fno-rtti is not set, or is set consistently",
+            "All linked code must use same RTTI setting"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "ninja-build-stopped": {
+      "id": "ninja-build-stopped",
+      "category": "runtime",
+      "regex": "ninja: build stopped:\\s*(\\d+)\\s*(?:target|targets)",
+      "extractors": {
+        "targets": "$1"
+      },
+      "description": "Ninja build stopped due to errors",
+      "commonCauses": [
+        "Compilation errors in one or more targets",
+        "Dependency resolution failed"
+      ],
+      "fixes": [
+        {
+          "id": "fix-errors-above",
+          "description": "Fix compilation errors listed above",
+          "type": "manual",
+          "steps": [
+            "Look at error messages above this line",
+            "Fix each compilation/linking error",
+            "Re-run build"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    },
+    "make-error-target": {
+      "id": "make-error-target",
+      "category": "runtime",
+      "regex": "make(?:\\[\\d+\\])?:\\s*\\*\\*\\*\\s*\\[([^\\]]+)\\]\\s*Error\\s*(\\d+)",
+      "extractors": {
+        "target": "$1",
+        "code": "$2"
+      },
+      "description": "Make target failed with error",
+      "commonCauses": [
+        "Command in recipe failed",
+        "Compilation or linking error"
+      ],
+      "fixes": [
+        {
+          "id": "check-recipe",
+          "description": "Check the failed command",
+          "type": "manual",
+          "steps": [
+            "Look at the command that failed for target ${target}",
+            "Error code ${code} from the command",
+            "Fix the underlying issue"
+          ],
+          "appliedCount": 0,
+          "successCount": 0
+        }
+      ],
+      "occurrences": 0,
+      "lastSeen": "",
+      "successRate": 0
+    }
+  },
+  "customPatterns": {}
+}

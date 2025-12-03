@@ -1,5 +1,5 @@
 {
-  "name": "@mcp-suite/build-doctor",
+  "name": "@chevp-mcp/build-doctor",
   "version": "1.0.0",
   "description": "Build Doctor MCP - Intelligent build error diagnosis and fix suggestions",
   "type": "module",

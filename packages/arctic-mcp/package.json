@@ -1,5 +1,5 @@
 {
-  "name": "@mcp-suite/arctic",
+  "name": "@chevp-mcp/arctic",
   "version": "1.0.0",
   "description": "MCP server for Arctic Workspace architecture and build system",
   "type": "module",

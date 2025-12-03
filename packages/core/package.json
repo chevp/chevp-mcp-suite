@@ -1,5 +1,5 @@
 {
-  "name": "@mcp-suite/core",
+  "name": "@chevp-mcp/core",
   "version": "1.0.0",
   "description": "Shared utilities for MCP servers",
   "type": "module",

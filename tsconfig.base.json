@@ -10,7 +10,7 @@
     "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "@mcp-suite/core": ["packages/core/src/index.ts"]
+      "@chevp-mcp/core": ["packages/core/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "dist"]

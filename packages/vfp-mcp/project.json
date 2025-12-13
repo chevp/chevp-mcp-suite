@@ -1,0 +1,23 @@
+{
+  "name": "vfp-mcp",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/vfp-mcp/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "tsc",
+        "cwd": "packages/vfp-mcp"
+      }
+    },
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node dist/stdio.js",
+        "cwd": "packages/vfp-mcp"
+      },
+      "dependsOn": ["build"]
+    }
+  }
+}

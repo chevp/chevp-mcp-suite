@@ -49,7 +49,6 @@ An Nx monorepo containing MCP (Model Context Protocol) servers for the **chevp w
 | `@mcp-suite/arctic` | MCP server for Arctic Workspace architecture and build system |
 | `@mcp-suite/chevp` | MCP server for chevp.github.io design system |
 | `@mcp-suite/cryo-protocol` | MCP server for Cryo Protocol definitions and gRPC services |
-| `@mcp-suite/nuna` | MCP server for Nuna SDK documentation |
 | `@mcp-suite/portfolio` | MCP server for portfolio information |
 
 <div align="right">
@@ -85,10 +84,6 @@ Add the following to your Claude Code MCP configuration (`~/.claude/settings.jso
 ```json
 {
   "mcpServers": {
-    "nuna": {
-      "command": "node",
-      "args": ["/path/to/chevp-mcp-suite/packages/nuna-mcp/dist/stdio.js"]
-    },
     "arctic": {
       "command": "node",
       "args": ["/path/to/chevp-mcp-suite/packages/arctic-mcp/dist/stdio.js"]
@@ -111,10 +106,6 @@ Add to your Claude Desktop configuration file:
 ```json
 {
   "mcpServers": {
-    "nuna": {
-      "command": "node",
-      "args": ["C:/chevp/tools/chevp-mcp-suite/packages/nuna-mcp/dist/stdio.js"]
-    },
     "arctic": {
       "command": "node",
       "args": ["C:/chevp/tools/chevp-mcp-suite/packages/arctic-mcp/dist/stdio.js"]
@@ -169,10 +160,10 @@ $ npm run test
 
 ```bash
 # Build a specific package
-$ npx nx build @mcp-suite/nuna
+$ npx nx build @mcp-suite/arctic
 
 # Run a specific package
-$ npx nx start @mcp-suite/nuna
+$ npx nx start @mcp-suite/arctic
 ```
 
 <div align="right">
@@ -198,7 +189,6 @@ chevp-mcp-suite/
 │   ├── arctic-mcp/            # Arctic Workspace MCP
 │   ├── chevp-mcp/             # Design System MCP
 │   ├── cryo-protocol-mcp/     # Cryo Protocol MCP
-│   ├── nuna-mcp/              # Nuna SDK MCP
 │   └── portfolio-mcp/         # Portfolio MCP
 ├── context-store/             # Shared state for MCP orchestration
 │   ├── portfolio/             # Strategic priorities, products

@@ -133,14 +133,14 @@
       "status": "active",
       "tags": ["audio", "sdk", "c++", "core"]
     },
-    "nuna-backend-core": {
-      "path": "nuna/nuna-backend-core",
+    "nuna-services": {
+      "path": "nuna/nuna-services",
       "owner": "nuna-po",
       "architect": "nuna-architect",
       "product": "nuna",
       "category": "nuna",
       "status": "active",
-      "tags": ["backend", "core"]
+      "tags": ["backend", "services"]
     },
     "nuna-backend-plugins": {
       "path": "nuna/nuna-backend-plugins",

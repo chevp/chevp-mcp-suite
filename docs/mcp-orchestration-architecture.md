@@ -564,11 +564,11 @@ architect: nuna-architect
 analyst: nuna-ba
 
 repositories:
-  - nuna/nuna-backend-core
+  - nuna/nuna-services
   - nuna/nuna-backend-plugins
   - nuna/nuna-docs
   - nuna/nuna-mcp
-  - nuna/nuna-playground-cpp
+  - nuna/nuna-playground
   - nuna/nuna-sdk-cpp
   - nuna/nuna-web-platform
   - nuna/nuna-workspace

@@ -226,7 +226,7 @@
     },
     "nexus-control": {
       "path": "nexus/nexus-control",
-      "owner": "cto",
+      "owner": "standards",
       "architect": "infra-architect",
       "product": "nexus",
       "category": "nexus",
@@ -235,7 +235,7 @@
     },
     "axon-runtime": {
       "path": "axon/axon-runtime",
-      "owner": "cto",
+      "owner": "standards",
       "architect": "infra-architect",
       "product": "axon",
       "category": "axon",

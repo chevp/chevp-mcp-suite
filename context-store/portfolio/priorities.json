@@ -8,13 +8,13 @@
       "id": "sp-001",
       "title": "MCP Orchestration Infrastructure",
       "description": "Implement hierarchical MCP system for workspace management",
-      "owner": "ceo",
+      "owner": "strategy",
       "status": "in_progress",
       "priority": 1,
       "products": ["infrastructure"],
       "deliverables": [
-        "CEO-MCP with portfolio overview",
-        "CTO-MCP with technical standards",
+        "Strategy-MCP with portfolio overview",
+        "Standards-MCP with technical standards",
         "Infra-Architect-MCP for orchestration",
         "Communication protocol implementation"
       ],

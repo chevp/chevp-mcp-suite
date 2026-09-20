@@ -54,7 +54,7 @@
     "nexus": {
       "name": "Nexus",
       "description": "Platform and control systems",
-      "owner": "cto",
+      "owner": "standards",
       "architect": "infra-architect",
       "status": "maintenance",
       "repositoryCount": 6,
@@ -64,7 +64,7 @@
     "axon": {
       "name": "Axon",
       "description": "Runtime and service registry",
-      "owner": "cto",
+      "owner": "standards",
       "architect": "infra-architect",
       "status": "maintenance",
       "repositoryCount": 5,

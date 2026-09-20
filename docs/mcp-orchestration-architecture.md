@@ -14,8 +14,8 @@ This document defines the communication protocol and role boundaries for the hie
 // packages/core/src/protocol/types.ts
 
 export type MCPRole =
-  // Executive Layer
-  | 'ceo' | 'cto' | 'cpo' | 'cfo' | 'cmo' | 'coo'
+  // Orchestration Layer
+  | 'strategy' | 'standards' | 'product' | 'cost' | 'docs' | 'ops'
   // Product Layer
   | 'coregfx-po' | 'cryo-po' | 'nuna-po' | 'arctic-po'
   // Business Analyst Layer
@@ -87,8 +87,8 @@ export interface SharedContext {
 Used for immediate operations that don't require deliberation.
 
 ```typescript
-// CEO asks CTO for architecture audit
-const response = await ctoMcp.call('audit_architecture', {
+// Strategy asks Standards for architecture audit
+const response = await standardsMcp.call('audit_architecture', {
   scope: 'coregfx',
   depth: 'shallow'
 });
@@ -103,7 +103,7 @@ await messageQueue.send({
   id: uuid(),
   type: 'request',
   from: 'coregfx-po',
-  to: 'cpo',
+  to: 'product',
   priority: 'normal',
   payload: {
     action: 'approve_release',
@@ -123,10 +123,10 @@ await messageQueue.send({
 Used for announcements that affect multiple MCPs.
 
 ```typescript
-// CTO announces breaking change
+// Standards announces breaking change
 await messageQueue.broadcast({
   type: 'notification',
-  from: 'cto',
+  from: 'standards',
   to: ['coregfx-architect', 'nuna-architect', 'cryo-architect'],
   payload: {
     action: 'breaking_change_announced',
@@ -149,22 +149,22 @@ Level 1: Peer Resolution
     PO ↔ PO (priority conflict)
 
 Level 2: Manager Resolution
-    → CTO (technical escalation)
-    → CPO (product escalation)
+    → Standards (technical escalation)
+    → Product (product escalation)
 
-Level 3: Executive Resolution
-    → CEO (cross-domain, strategic)
+Level 3: Top-Level Resolution
+    → Strategy (cross-domain, strategic)
 ```
 
 ---
 
 ## Role Definitions
 
-### Executive Layer
+### Orchestration Layer
 
-#### CEO-MCP
+#### Strategy-MCP
 ```yaml
-name: ceo-mcp
+name: strategy-mcp
 responsibility: Strategic direction and cross-cutting decisions
 scope: All 200+ repositories, all products
 
@@ -200,19 +200,19 @@ tools:
       resolution: Resolution
 
   # Coordination
-  - name: request_executive_summary
+  - name: request_status_summary
     description: Ask subordinate MCPs for status
     params:
       from: MCPRole[]
       topics: string[]
 
-delegates_to: [cto, cpo, cfo, cmo, coo]
-escalation_from: [cto, cpo]
+delegates_to: [standards, product, cost, docs, ops]
+escalation_from: [standards, product]
 ```
 
-#### CTO-MCP
+#### Standards-MCP
 ```yaml
-name: cto-mcp
+name: standards-mcp
 responsibility: Technical excellence across all products
 scope: Architecture, quality standards, technical debt
 
@@ -260,12 +260,12 @@ tools:
     returns: BreakingChangeDecision
 
 delegates_to: [coregfx-architect, cryo-architect, nuna-architect, arctic-architect, infra-architect]
-reports_to: ceo
+reports_to: strategy
 ```
 
-#### CPO-MCP
+#### Product-MCP
 ```yaml
-name: cpo-mcp
+name: product-mcp
 responsibility: Product strategy and feature coordination
 scope: All product backlogs, cross-product features
 
@@ -292,7 +292,7 @@ tools:
       epic: CrossProductEpic
 
 delegates_to: [coregfx-po, cryo-po, nuna-po, arctic-po]
-reports_to: ceo
+reports_to: strategy
 ```
 
 ### Product Layer
@@ -332,13 +332,13 @@ tools:
       storyIds: string[]
     returns: Estimate[]
 
-  - name: report_to_cpo
+  - name: report_to_product
     description: Status updates
     returns: ProductStatusReport
 
 delegates_to: [{product}-ba]
-reports_to: cpo
-collaborates_with: [{product}-architect, cto]
+reports_to: product
+collaborates_with: [{product}-architect, standards]
 ```
 
 #### Business Analyst MCPs (Template)
@@ -444,7 +444,7 @@ tools:
       repos: string[]
     returns: DependencyGraph
 
-reports_to: cto
+reports_to: standards
 collaborates_with: [{product}-po, {product}-ba, peer architects]
 ```
 
@@ -497,7 +497,7 @@ tools:
       message: MCPMessage
       recipients: MCPRole[]
 
-reports_to: cto
+reports_to: standards
 ```
 
 ---
@@ -601,11 +601,11 @@ repositories:
   - repos/arctic-engine
 ```
 
-### Supporting Ecosystems (CTO Oversight)
+### Supporting Ecosystems (Standards Oversight)
 
 #### Nexus Platform
 ```yaml
-oversight: cto
+oversight: standards
 architect: infra-architect
 
 repositories:
@@ -619,7 +619,7 @@ repositories:
 
 #### Axon Runtime
 ```yaml
-oversight: cto
+oversight: standards
 architect: infra-architect
 
 repositories:
@@ -632,7 +632,7 @@ repositories:
 
 #### Quantum Rift
 ```yaml
-oversight: cto
+oversight: standards
 architect: infra-architect
 
 repositories:
@@ -647,7 +647,7 @@ repositories:
 
 ```yaml
 owner: infra-architect
-oversight: cto
+oversight: standards
 
 repositories:
   # MCP Suite
@@ -663,11 +663,11 @@ repositories:
   - tools/silvarin-sdk-dev
 ```
 
-### Applications (CMO/COO)
+### Applications (Docs/Ops)
 
 ```yaml
-oversight: coo
-documentation: cmo
+oversight: ops
+documentation: docs
 
 repositories:
   - apps/atlas-studio
@@ -681,10 +681,10 @@ repositories:
   - apps/territory-3d
 ```
 
-### Websites (CMO)
+### Websites (Docs)
 
 ```yaml
-owner: cmo
+owner: docs
 
 repositories:
   - sites/antarctica.io
@@ -695,10 +695,10 @@ repositories:
   - sites/public-playground-site
 ```
 
-### Frameworks (CTO)
+### Frameworks (Standards)
 
 ```yaml
-oversight: cto
+oversight: standards
 architect: infra-architect
 
 repositories:
@@ -715,7 +715,7 @@ repositories:
 ### Misc (Triage Required)
 
 ```yaml
-oversight: cto
+oversight: standards
 status: needs_categorization
 
 repositories:
@@ -804,7 +804,7 @@ chevp-mcp-suite/
   "definitions": {
     "MCPRole": {
       "enum": [
-        "ceo", "cto", "cpo", "cfo", "cmo", "coo",
+        "strategy", "standards", "product", "cost", "docs", "ops",
         "coregfx-po", "cryo-po", "nuna-po", "arctic-po",
         "coregfx-ba", "cryo-ba", "nuna-ba", "arctic-ba",
         "coregfx-architect", "cryo-architect", "nuna-architect",
@@ -822,8 +822,8 @@ chevp-mcp-suite/
 ### Phase 1: Foundation
 1. **core protocol types** - Message types, interfaces
 2. **context-store schema** - JSON schemas for all stores
-3. **CEO-MCP** - Portfolio overview, strategic priorities
-4. **CTO-MCP** - Technical standards, coordination
+3. **Strategy-MCP** - Portfolio overview, strategic priorities
+4. **Standards-MCP** - Technical standards, coordination
 5. **Infra-Architect-MCP** - MCP orchestration, routing
 
 ### Phase 2: First Product Vertical (CoreGFX)
@@ -837,7 +837,7 @@ chevp-mcp-suite/
 - Arctic stack (PO, Architect, BA)
 
 ### Phase 4: Supporting Roles
-- CPO-MCP (if needed for multi-product coordination)
-- CFO-MCP (cost analysis)
-- CMO-MCP (documentation)
-- COO-MCP (operations)
+- Product-MCP (if needed for multi-product coordination)
+- Cost-MCP (cost analysis)
+- Docs-MCP (documentation)
+- Ops-MCP (operations)

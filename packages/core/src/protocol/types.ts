@@ -8,7 +8,7 @@
 // Role Definitions
 // =============================================================================
 
-export type ExecutiveRole = 'ceo' | 'cto' | 'cpo' | 'cfo' | 'cmo' | 'coo';
+export type OrchestrationRole = 'strategy' | 'standards' | 'product' | 'cost' | 'docs' | 'ops';
 
 export type ProductOwnerRole =
   | 'coregfx-po'
@@ -30,7 +30,7 @@ export type ArchitectRole =
   | 'infra-architect';
 
 export type MCPRole =
-  | ExecutiveRole
+  | OrchestrationRole
   | ProductOwnerRole
   | BusinessAnalystRole
   | ArchitectRole;
@@ -133,15 +133,15 @@ export interface RoleHierarchy {
 }
 
 export const ROLE_HIERARCHY: Record<MCPRole, RoleHierarchy> = {
-  // Executive Layer
-  ceo: {
-    role: 'ceo',
-    delegatesTo: ['cto', 'cpo', 'cfo', 'cmo', 'coo'],
+  // Orchestration Layer
+  strategy: {
+    role: 'strategy',
+    delegatesTo: ['standards', 'product', 'cost', 'docs', 'ops'],
     collaboratesWith: [],
   },
-  cto: {
-    role: 'cto',
-    reportsTo: 'ceo',
+  standards: {
+    role: 'standards',
+    reportsTo: 'strategy',
     delegatesTo: [
       'coregfx-architect',
       'cryo-architect',
@@ -149,57 +149,57 @@ export const ROLE_HIERARCHY: Record<MCPRole, RoleHierarchy> = {
       'arctic-architect',
       'infra-architect',
     ],
-    collaboratesWith: ['cpo'],
+    collaboratesWith: ['product'],
   },
-  cpo: {
-    role: 'cpo',
-    reportsTo: 'ceo',
+  product: {
+    role: 'product',
+    reportsTo: 'strategy',
     delegatesTo: ['coregfx-po', 'cryo-po', 'nuna-po', 'arctic-po'],
-    collaboratesWith: ['cto'],
+    collaboratesWith: ['standards'],
   },
-  cfo: {
-    role: 'cfo',
-    reportsTo: 'ceo',
+  cost: {
+    role: 'cost',
+    reportsTo: 'strategy',
     delegatesTo: [],
-    collaboratesWith: ['cto', 'coo'],
+    collaboratesWith: ['standards', 'ops'],
   },
-  cmo: {
-    role: 'cmo',
-    reportsTo: 'ceo',
+  docs: {
+    role: 'docs',
+    reportsTo: 'strategy',
     delegatesTo: [],
-    collaboratesWith: ['cpo'],
+    collaboratesWith: ['product'],
   },
-  coo: {
-    role: 'coo',
-    reportsTo: 'ceo',
+  ops: {
+    role: 'ops',
+    reportsTo: 'strategy',
     delegatesTo: [],
-    collaboratesWith: ['cto', 'cfo'],
+    collaboratesWith: ['standards', 'cost'],
   },
 
   // Product Owner Layer
   'coregfx-po': {
     role: 'coregfx-po',
-    reportsTo: 'cpo',
+    reportsTo: 'product',
     delegatesTo: ['coregfx-ba'],
-    collaboratesWith: ['coregfx-architect', 'cto'],
+    collaboratesWith: ['coregfx-architect', 'standards'],
   },
   'cryo-po': {
     role: 'cryo-po',
-    reportsTo: 'cpo',
+    reportsTo: 'product',
     delegatesTo: ['cryo-ba'],
-    collaboratesWith: ['cryo-architect', 'cto'],
+    collaboratesWith: ['cryo-architect', 'standards'],
   },
   'nuna-po': {
     role: 'nuna-po',
-    reportsTo: 'cpo',
+    reportsTo: 'product',
     delegatesTo: ['nuna-ba'],
-    collaboratesWith: ['nuna-architect', 'cto'],
+    collaboratesWith: ['nuna-architect', 'standards'],
   },
   'arctic-po': {
     role: 'arctic-po',
-    reportsTo: 'cpo',
+    reportsTo: 'product',
     delegatesTo: ['arctic-ba'],
-    collaboratesWith: ['arctic-architect', 'cto'],
+    collaboratesWith: ['arctic-architect', 'standards'],
   },
 
   // Business Analyst Layer
@@ -231,31 +231,31 @@ export const ROLE_HIERARCHY: Record<MCPRole, RoleHierarchy> = {
   // Architect Layer
   'coregfx-architect': {
     role: 'coregfx-architect',
-    reportsTo: 'cto',
+    reportsTo: 'standards',
     delegatesTo: [],
     collaboratesWith: ['coregfx-po', 'coregfx-ba', 'infra-architect'],
   },
   'cryo-architect': {
     role: 'cryo-architect',
-    reportsTo: 'cto',
+    reportsTo: 'standards',
     delegatesTo: [],
     collaboratesWith: ['cryo-po', 'cryo-ba', 'infra-architect'],
   },
   'nuna-architect': {
     role: 'nuna-architect',
-    reportsTo: 'cto',
+    reportsTo: 'standards',
     delegatesTo: [],
     collaboratesWith: ['nuna-po', 'nuna-ba', 'infra-architect'],
   },
   'arctic-architect': {
     role: 'arctic-architect',
-    reportsTo: 'cto',
+    reportsTo: 'standards',
     delegatesTo: [],
     collaboratesWith: ['arctic-po', 'arctic-ba', 'infra-architect'],
   },
   'infra-architect': {
     role: 'infra-architect',
-    reportsTo: 'cto',
+    reportsTo: 'standards',
     delegatesTo: [],
     collaboratesWith: [
       'coregfx-architect',
@@ -278,7 +278,7 @@ export interface Product {
   id: ProductId;
   name: string;
   description: string;
-  owner: ProductOwnerRole | ExecutiveRole;
+  owner: ProductOwnerRole | OrchestrationRole;
   architect: ArchitectRole;
   analyst?: BusinessAnalystRole;
   status: ProductStatus;

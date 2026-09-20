@@ -12,16 +12,16 @@ This document defines the value stream delivery workflow using SAFe 6.0 principl
 SAFe 6.0 Role              │ MCP Implementation
 ───────────────────────────┼─────────────────────────────────────
 Portfolio Level            │
-  Epic Owner               │ CEO-MCP (strategic epics)
-  Enterprise Architect     │ CTO-MCP (solution architecture)
+  Epic Owner               │ Strategy-MCP (strategic epics)
+  Enterprise Architect     │ Standards-MCP (solution architecture)
                            │
 Program Level (ART)        │
-  Release Train Engineer   │ RTE-MCP (ART coordination)
-  Product Management       │ CPO-MCP + Product-PO-MCPs
+  Release Train Engineer   │ Release-MCP (ART coordination)
+  Product Management       │ Product-MCP + Product-PO-MCPs
   System Architect         │ Product-Architect-MCPs
                            │
 Team Level                 │
-  Scrum Master             │ Scrum-Master-MCP (per team/product)
+  Scrum Master             │ Team-Sync-MCP (per team/product)
   Product Owner            │ Product-PO-MCPs
   Business Analyst         │ Product-BA-MCPs
   Developer                │ (Human + Claude Code)
@@ -33,7 +33,7 @@ Team Level                 │
 
 ### Step 1: IDEATE - Epic Creation & Approval
 
-**Owner:** CEO-MCP + RTE-MCP
+**Owner:** Strategy-MCP + Release-MCP
 **Input:** Business need, market opportunity, strategic goal
 **Output:** Approved Epic with business case
 
@@ -41,7 +41,7 @@ Team Level                 │
 ┌─────────────────────────────────────────────────────────────────┐
 │  IDEATE                                                         │
 │                                                                 │
-│  CEO-MCP                    RTE-MCP                             │
+│  Strategy-MCP                    Release-MCP                    │
 │  ┌──────────────┐          ┌──────────────┐                     │
 │  │ create_epic  │ ───────► │ validate_epic│                     │
 │  │              │          │ fit_to_art   │                     │
@@ -59,7 +59,7 @@ Team Level                 │
 
 ### Step 2: ANALYZE - Feature Breakdown
 
-**Owner:** RTE-MCP + Product-PO-MCPs + Product-BA-MCPs
+**Owner:** Release-MCP + Product-PO-MCPs + Product-BA-MCPs
 **Input:** Approved Epic
 **Output:** Features with acceptance criteria
 
@@ -67,7 +67,7 @@ Team Level                 │
 ┌─────────────────────────────────────────────────────────────────┐
 │  ANALYZE                                                        │
 │                                                                 │
-│  RTE-MCP                                                        │
+│  Release-MCP                                                    │
 │  ┌──────────────────┐                                           │
 │  │ decompose_epic   │                                           │
 │  │ to_features      │                                           │
@@ -91,7 +91,7 @@ Team Level                 │
 
 ### Step 3: PLAN - PI Planning & Sprint Planning
 
-**Owner:** RTE-MCP + Scrum-Master-MCP
+**Owner:** Release-MCP + Team-Sync-MCP
 **Input:** Features, Team capacity
 **Output:** PI Plan, Sprint backlogs
 
@@ -99,7 +99,7 @@ Team Level                 │
 ┌─────────────────────────────────────────────────────────────────┐
 │  PLAN                                                           │
 │                                                                 │
-│  RTE-MCP (PI Level)         Scrum-Master-MCP (Sprint Level)     │
+│  Release-MCP (PI Level)         Team-Sync-MCP (Sprint Level)    │
 │  ┌──────────────┐          ┌──────────────┐                     │
 │  │ plan_pi      │ ───────► │ plan_sprint  │                     │
 │  │              │          │              │                     │
@@ -118,7 +118,7 @@ Team Level                 │
 
 ### Step 4: BUILD - Development & Integration
 
-**Owner:** Scrum-Master-MCP + CTO-MCP
+**Owner:** Team-Sync-MCP + Standards-MCP
 **Input:** Sprint backlog
 **Output:** Working increment
 
@@ -126,7 +126,7 @@ Team Level                 │
 ┌─────────────────────────────────────────────────────────────────┐
 │  BUILD                                                          │
 │                                                                 │
-│  Scrum-Master-MCP                  CTO-MCP                      │
+│  Team-Sync-MCP                  Standards-MCP                   │
 │  ┌──────────────┐                 ┌──────────────┐              │
 │  │ track_sprint │                 │ enforce_     │              │
 │  │ progress     │                 │ standards    │              │
@@ -151,7 +151,7 @@ Team Level                 │
 
 ### Step 5: VALIDATE - System Demo & Review
 
-**Owner:** RTE-MCP + Scrum-Master-MCP + PO-MCPs
+**Owner:** Release-MCP + Team-Sync-MCP + PO-MCPs
 **Input:** Working increment
 **Output:** Validated features, feedback
 
@@ -159,7 +159,7 @@ Team Level                 │
 ┌─────────────────────────────────────────────────────────────────┐
 │  VALIDATE                                                       │
 │                                                                 │
-│  Scrum-Master-MCP          RTE-MCP               PO-MCP         │
+│  Team-Sync-MCP          Release-MCP               PO-MCP        │
 │  ┌──────────────┐         ┌──────────────┐      ┌──────────┐    │
 │  │ run_sprint   │ ──────► │ run_system   │ ◄─── │ accept_  │    │
 │  │ review       │         │ demo         │      │ features │    │
@@ -178,7 +178,7 @@ Team Level                 │
 
 ### Step 6: RELEASE - Deployment & Value Delivery
 
-**Owner:** RTE-MCP + COO-MCP (if implemented)
+**Owner:** Release-MCP + Ops-MCP (if implemented)
 **Input:** Validated increment
 **Output:** Released value, metrics
 
@@ -186,7 +186,7 @@ Team Level                 │
 ┌─────────────────────────────────────────────────────────────────┐
 │  RELEASE                                                        │
 │                                                                 │
-│  RTE-MCP                              CEO-MCP                   │
+│  Release-MCP                              Strategy-MCP          │
 │  ┌──────────────┐                    ┌──────────────┐           │
 │  │ prepare_     │                    │ approve_     │           │
 │  │ release      │ ─────────────────► │ release      │           │
@@ -214,60 +214,34 @@ Team Level                 │
 ## Complete MCP Hierarchy with SAFe Roles
 
 ```
-                              ┌─────────────┐
-                              │   CEO-MCP   │
-                              │(Epic Owner) │
-                              └──────┬──────┘
-                                     │
-         ┌───────────────┬───────────┼───────────┬───────────────┐
-         │               │           │           │               │
-   ┌─────▼─────┐   ┌─────▼─────┐   ┌─▼───┐ ┌─────▼─────┐   ┌─────▼─────┐
-   │  CTO-MCP  │   │  CPO-MCP  │   │ CFO │ │  CMO-MCP  │   │  COO-MCP  │
-   │(Ent.Arch) │   │(Prod.Mgmt)│   │     │ │           │   │(Release)  │
-   └─────┬─────┘   └─────┬─────┘   └─────┘ └───────────┘   └───────────┘
-         │               │
-         │         ┌─────┴─────────────────────────────────────┐
-         │         │                                           │
-         │   ┌─────▼─────┐                                     │
-         │   │  RTE-MCP  │◄─────────────────────────────────────┤
-         │   │(Release   │     Coordinates all ARTs             │
-         │   │ Train Eng)│                                      │
-         │   └─────┬─────┘                                      │
-         │         │                                            │
-         │   ┌─────┴─────────────────────────────────────┐      │
-         │   │                                           │      │
-         │   │              AGILE RELEASE TRAIN          │      │
-         │   │                                           │      │
-         │   │  ┌─────────────────────────────────────┐  │      │
-         │   │  │         Scrum-Master-MCP            │  │      │
-         │   │  │    (Orchestrates all teams)         │  │      │
-         │   │  └─────────────────┬───────────────────┘  │      │
-         │   │                    │                      │      │
-         │   │    ┌───────────────┼───────────────┐      │      │
-         │   │    │               │               │      │      │
-         │   │ ┌──▼──┐         ┌──▼──┐         ┌──▼──┐   │      │
-         │   │ │Core │         │Cryo │         │Nuna │   │      │
-         │   │ │GFX  │         │Team │         │Team │   │      │
-         │   │ │Team │         │     │         │     │   │      │
-         │   │ └──┬──┘         └──┬──┘         └──┬──┘   │      │
-         │   │    │               │               │      │      │
-         │   └────┼───────────────┼───────────────┼──────┘      │
-         │        │               │               │             │
-         │   ┌────▼────┐     ┌────▼────┐     ┌────▼────┐        │
-         │   │CoreGFX  │     │Cryo     │     │Nuna     │        │
-         │   │PO + BA  │     │PO + BA  │     │PO + BA  │        │
-         │   │+Architect│    │+Architect│    │+Architect│       │
-         └───┤         │     │         │     │         ├────────┘
-             └─────────┘     └─────────┘     └─────────┘
-                    Technical oversight from CTO-MCP
+Strategy-MCP (Epic Owner)
+│
+├── Standards-MCP (Enterprise Architect)
+│   │
+│   └── Release-MCP (Release Train Engineer) ◄── coordinates all ARTs
+│       │
+│       └── Agile Release Train
+│           │
+│           └── Team-Sync-MCP (orchestrates all teams)
+│               │
+│               ├── CoreGFX Team → CoreGFX PO + BA + Architect
+│               ├── Cryo Team    → Cryo PO + BA + Architect
+│               └── Nuna Team    → Nuna PO + BA + Architect
+│
+├── Product-MCP (Product Management)
+├── Cost-MCP
+├── Docs-MCP
+└── Ops-MCP (Release)
+
+Technical oversight from Standards-MCP
 ```
 
 ---
 
-## RTE-MCP Responsibilities
+## Release-MCP Responsibilities
 
 ```yaml
-name: rte-mcp
+name: release-mcp
 role: Release Train Engineer
 responsibility: ART coordination, PI planning, value stream optimization
 
@@ -333,16 +307,16 @@ tools:
     params:
       piId: string
 
-reports_to: cpo
-collaborates_with: [cto, scrum-master, all product teams]
+reports_to: product
+collaborates_with: [standards, team-sync, all product teams]
 ```
 
 ---
 
-## Scrum-Master-MCP Responsibilities
+## Team-Sync-MCP Responsibilities
 
 ```yaml
-name: scrum-master-mcp
+name: team-sync-mcp
 role: Scrum Master
 responsibility: Team facilitation, impediment removal, process coaching
 
@@ -407,8 +381,8 @@ tools:
     params:
       sprintId: string
 
-reports_to: rte
-collaborates_with: [cto, product-po, product-architect, product-ba]
+reports_to: release
+collaborates_with: [standards, product-po, product-architect, product-ba]
 ```
 
 ---
@@ -449,12 +423,12 @@ context-store/
 
 ```
 1. IDEATE
-   CEO-MCP: create_strategic_priority(title="Vulkan 1.3 Support")
-   RTE-MCP: create_epic(title="Vulkan 1.3", products=["coregfx"])
-   CEO-MCP: approve_epic(epicId="epic-001")
+   Strategy-MCP: create_strategic_priority(title="Vulkan 1.3 Support")
+   Release-MCP: create_epic(title="Vulkan 1.3", products=["coregfx"])
+   Strategy-MCP: approve_epic(epicId="epic-001")
 
 2. ANALYZE
-   RTE-MCP: decompose_epic_to_features(epicId="epic-001")
+   Release-MCP: decompose_epic_to_features(epicId="epic-001")
    → Creates: feature-001 "Ray Tracing Pipeline"
    → Creates: feature-002 "Dynamic Rendering"
 
@@ -462,24 +436,24 @@ context-store/
    CoreGFX-Architect-MCP: estimate_effort(featureId="feature-001")
 
 3. PLAN
-   RTE-MCP: plan_pi(piNumber="2025-Q1", objectives=[...])
-   RTE-MCP: assign_features_to_iterations(piId="pi-2025-q1", ...)
-   Scrum-Master-MCP: plan_sprint(team="coregfx", sprintNumber=1)
-   Scrum-Master-MCP: create_sprint_backlog(sprintId="sprint-001", ...)
+   Release-MCP: plan_pi(piNumber="2025-Q1", objectives=[...])
+   Release-MCP: assign_features_to_iterations(piId="pi-2025-q1", ...)
+   Team-Sync-MCP: plan_sprint(team="coregfx", sprintNumber=1)
+   Team-Sync-MCP: create_sprint_backlog(sprintId="sprint-001", ...)
 
 4. BUILD
-   Scrum-Master-MCP: track_sprint_progress(sprintId="sprint-001")
-   Scrum-Master-MCP: facilitate_daily_scrum(sprintId="sprint-001")
-   CTO-MCP: enforce_standards(repos=["coregfx-*"])
+   Team-Sync-MCP: track_sprint_progress(sprintId="sprint-001")
+   Team-Sync-MCP: facilitate_daily_scrum(sprintId="sprint-001")
+   Standards-MCP: enforce_standards(repos=["coregfx-*"])
 
 5. VALIDATE
-   Scrum-Master-MCP: run_sprint_review(sprintId="sprint-001")
-   RTE-MCP: run_system_demo(piId="pi-2025-q1", iteration=1)
+   Team-Sync-MCP: run_sprint_review(sprintId="sprint-001")
+   Release-MCP: run_system_demo(piId="pi-2025-q1", iteration=1)
    CoreGFX-PO-MCP: accept_feature(featureId="feature-001")
-   Scrum-Master-MCP: run_retrospective(sprintId="sprint-001")
+   Team-Sync-MCP: run_retrospective(sprintId="sprint-001")
 
 6. RELEASE
-   RTE-MCP: prepare_release(piId="pi-2025-q1", version="2.0.0")
-   CEO-MCP: approve_release(releaseId="rel-001")
-   RTE-MCP: close_pi(piId="pi-2025-q1")
+   Release-MCP: prepare_release(piId="pi-2025-q1", version="2.0.0")
+   Strategy-MCP: approve_release(releaseId="rel-001")
+   Release-MCP: close_pi(piId="pi-2025-q1")
 ```

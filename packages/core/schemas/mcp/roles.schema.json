@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.chevp-mcp-suite.dev/mcp/roles.schema.json",
+  "title": "MCPRole",
+  "description": "Canonical set of MCP server identifiers. Mirrors packages/core/src/protocol/types.ts#MCPRole.",
+  "definitions": {
+    "MCPRole": {
+      "enum": [
+        "strategy",
+        "standards",
+        "product",
+        "cost",
+        "docs",
+        "ops",
+        "coregfx-po",
+        "cryo-po",
+        "nuna-po",
+        "arctic-po",
+        "coregfx-ba",
+        "cryo-ba",
+        "nuna-ba",
+        "arctic-ba",
+        "coregfx-architect",
+        "cryo-architect",
+        "nuna-architect",
+        "arctic-architect",
+        "infra-architect"
+      ]
+    }
+  }
+}

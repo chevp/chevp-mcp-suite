@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.chevp-mcp-suite.dev/mcp/product.schema.json",
+  "title": "product-mcp communication channel",
+  "description": "Valid inbound MCPMessages for the 'product' MCP server: who may send them (`from`) and which of this server's tools they may invoke (`payload.action`). Extends the shared envelope in ./_envelope.schema.json.",
+  "allOf": [
+    {
+      "$ref": "./_envelope.schema.json"
+    },
+    {
+      "properties": {
+        "to": {
+          "oneOf": [
+            {
+              "const": "product"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "./roles.schema.json#/definitions/MCPRole"
+              },
+              "contains": {
+                "const": "product"
+              }
+            }
+          ]
+        },
+        "from": {
+          "enum": [
+            "arctic-po",
+            "coregfx-po",
+            "cryo-po",
+            "nuna-po",
+            "standards",
+            "strategy"
+          ]
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "enum": [
+                "get_all_backlogs",
+                "coordinate_release",
+                "resolve_priority_conflict",
+                "track_cross_product_epic"
+              ]
+            }
+          },
+          "required": [
+            "action",
+            "parameters"
+          ]
+        }
+      }
+    }
+  ]
+}

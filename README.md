@@ -33,12 +33,12 @@ An Nx monorepo containing MCP (Model Context Protocol) servers for the **chevp w
 
 ## 📦 Packages
 
-### Orchestration MCPs (Executive Layer)
+### Orchestration MCPs (Cross-Cutting Layer)
 
 | Package | Description |
 |---------|-------------|
-| `@mcp-suite/ceo` | CEO MCP - Strategic direction and cross-cutting decisions |
-| `@mcp-suite/cto` | CTO MCP - Technical excellence and architecture coordination |
+| `@mcp-suite/strategy` | Strategy MCP - Strategic direction and cross-cutting decisions |
+| `@mcp-suite/standards` | Standards MCP - Technical excellence and architecture coordination |
 | `@mcp-suite/infra-architect` | Infrastructure Architect MCP - Shared infrastructure and MCP orchestration |
 
 ### Domain MCPs
@@ -180,9 +180,9 @@ chevp-mcp-suite/
 │   ├── core/                  # Shared utilities and protocol types
 │   │   └── src/
 │   │       └── protocol/      # Message queue, context store, types
-│   ├── ceo-mcp/               # CEO MCP (Strategic direction)
+│   ├── strategy-mcp/          # Strategy MCP (Strategic direction)
 │   │   └── src/tools/
-│   ├── cto-mcp/               # CTO MCP (Technical excellence)
+│   ├── standards-mcp/         # Standards MCP (Technical excellence)
 │   │   └── src/tools/
 │   ├── infra-architect-mcp/   # Infra Architect MCP (Orchestration)
 │   │   └── src/tools/

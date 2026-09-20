@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.chevp-mcp-suite.dev/mcp/standards.schema.json",
+  "title": "standards-mcp communication channel",
+  "description": "Valid inbound MCPMessages for the 'standards' MCP server: who may send them (`from`) and which of this server's tools they may invoke (`payload.action`). Extends the shared envelope in ./_envelope.schema.json.",
+  "allOf": [
+    {
+      "$ref": "./_envelope.schema.json"
+    },
+    {
+      "properties": {
+        "to": {
+          "oneOf": [
+            {
+              "const": "standards"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "./roles.schema.json#/definitions/MCPRole"
+              },
+              "contains": {
+                "const": "standards"
+              }
+            }
+          ]
+        },
+        "from": {
+          "enum": [
+            "arctic-architect",
+            "coregfx-architect",
+            "cryo-architect",
+            "infra-architect",
+            "nuna-architect",
+            "product",
+            "strategy"
+          ]
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "enum": [
+                "audit_architecture",
+                "enforce_standards",
+                "evaluate_technology",
+                "manage_technical_debt",
+                "coordinate_architects",
+                "review_breaking_changes"
+              ]
+            }
+          },
+          "required": [
+            "action",
+            "parameters"
+          ]
+        }
+      }
+    }
+  ]
+}

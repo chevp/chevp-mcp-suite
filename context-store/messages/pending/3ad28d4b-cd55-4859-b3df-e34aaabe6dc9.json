@@ -1,7 +1,7 @@
 {
   "type": "request",
-  "from": "ceo",
-  "to": "cto",
+  "from": "strategy",
+  "to": "standards",
   "priority": "high",
   "payload": {
     "action": "provide_executive_summary",
@@ -15,7 +15,7 @@
       ],
       "format": "structured"
     },
-    "reason": "CEO executive summary request"
+    "reason": "Strategy executive summary request"
   },
   "requiresResponse": true,
   "deadline": "2025-12-02T12:00:00Z",

@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.chevp-mcp-suite.dev/mcp/envelope.schema.json",
+  "title": "MCPMessage",
+  "description": "Shared envelope for every message exchanged between MCP servers. Mirrors packages/core/src/protocol/types.ts#MCPMessage. Every per-server schema in this directory extends this envelope and narrows `from`, `to`, and `payload.action` to that server's communication channel.",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "format": "uuid",
+      "description": "Unique message identifier."
+    },
+    "type": {
+      "type": "string",
+      "enum": ["request", "response", "notification", "escalation", "directive", "report"]
+    },
+    "from": {
+      "$ref": "./roles.schema.json#/definitions/MCPRole"
+    },
+    "to": {
+      "oneOf": [
+        { "$ref": "./roles.schema.json#/definitions/MCPRole" },
+        {
+          "type": "array",
+          "items": { "$ref": "./roles.schema.json#/definitions/MCPRole" },
+          "minItems": 1
+        }
+      ]
+    },
+    "priority": {
+      "type": "string",
+      "enum": ["low", "normal", "high", "critical"]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "correlationId": {
+      "type": "string",
+      "description": "Links related messages together."
+    },
+    "replyTo": {
+      "type": "string",
+      "description": "Message ID being replied to."
+    },
+    "payload": {
+      "type": "object",
+      "properties": {
+        "action": {
+          "type": "string",
+          "description": "Narrowed to the receiving server's tool names in its own schema file."
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": ["action", "parameters"]
+    },
+    "context": {
+      "type": "object",
+      "properties": {
+        "repositories": { "type": "array", "items": { "type": "string" } },
+        "products": { "type": "array", "items": { "type": "string" } },
+        "sprint": { "type": "string" },
+        "milestone": { "type": "string" },
+        "relatedMessages": { "type": "array", "items": { "type": "string" } },
+        "metadata": { "type": "object" }
+      }
+    },
+    "requiresResponse": {
+      "type": "boolean"
+    },
+    "deadline": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "processing", "completed", "failed"]
+    }
+  },
+  "required": ["id", "type", "from", "to", "priority", "timestamp", "payload", "requiresResponse"]
+}

@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.chevp-mcp-suite.dev/mcp/ops.schema.json",
+  "title": "ops-mcp communication channel",
+  "description": "Valid inbound MCPMessages for the 'ops' MCP server: who may send them (`from`) and which of this server's tools they may invoke (`payload.action`). Extends the shared envelope in ./_envelope.schema.json.",
+  "allOf": [
+    {
+      "$ref": "./_envelope.schema.json"
+    },
+    {
+      "properties": {
+        "to": {
+          "oneOf": [
+            {
+              "const": "ops"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "./roles.schema.json#/definitions/MCPRole"
+              },
+              "contains": {
+                "const": "ops"
+              }
+            }
+          ]
+        },
+        "from": {
+          "enum": [
+            "cost",
+            "standards",
+            "strategy"
+          ]
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "type": "string",
+              "$comment": "No tools are defined for this MCP yet; actions will be enumerated once its responsibilities are implemented (see docs/mcp-orchestration-architecture.md, Phase 4)."
+            }
+          },
+          "required": [
+            "action",
+            "parameters"
+          ]
+        }
+      }
+    }
+  ]
+}

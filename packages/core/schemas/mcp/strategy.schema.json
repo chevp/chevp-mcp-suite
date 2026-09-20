@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.chevp-mcp-suite.dev/mcp/strategy.schema.json",
+  "title": "strategy-mcp communication channel",
+  "description": "Valid inbound MCPMessages for the 'strategy' MCP server: who may send them (`from`) and which of this server's tools they may invoke (`payload.action`). Extends the shared envelope in ./_envelope.schema.json.",
+  "allOf": [
+    {
+      "$ref": "./_envelope.schema.json"
+    },
+    {
+      "properties": {
+        "to": {
+          "oneOf": [
+            {
+              "const": "strategy"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "./roles.schema.json#/definitions/MCPRole"
+              },
+              "contains": {
+                "const": "strategy"
+              }
+            }
+          ]
+        },
+        "from": {
+          "enum": [
+            "cost",
+            "docs",
+            "ops",
+            "product",
+            "standards"
+          ]
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "enum": [
+                "get_portfolio_overview",
+                "set_strategic_priority",
+                "allocate_resources",
+                "approve_major_change",
+                "resolve_escalation",
+                "request_status_summary"
+              ]
+            }
+          },
+          "required": [
+            "action",
+            "parameters"
+          ]
+        }
+      }
+    }
+  ]
+}

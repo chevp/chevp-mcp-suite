@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.chevp-mcp-suite.dev/mcp/infra-architect.schema.json",
+  "title": "infra-architect-mcp communication channel",
+  "description": "Valid inbound MCPMessages for the 'infra-architect' MCP server: who may send them (`from`) and which of this server's tools they may invoke (`payload.action`). Extends the shared envelope in ./_envelope.schema.json.",
+  "allOf": [
+    {
+      "$ref": "./_envelope.schema.json"
+    },
+    {
+      "properties": {
+        "to": {
+          "oneOf": [
+            {
+              "const": "infra-architect"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "./roles.schema.json#/definitions/MCPRole"
+              },
+              "contains": {
+                "const": "infra-architect"
+              }
+            }
+          ]
+        },
+        "from": {
+          "enum": [
+            "arctic-architect",
+            "coregfx-architect",
+            "cryo-architect",
+            "nuna-architect",
+            "standards"
+          ]
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "enum": [
+                "manage_build_system",
+                "update_ci_templates",
+                "manage_shared_libs",
+                "route_message",
+                "get_mcp_status",
+                "invoke_mcp",
+                "broadcast_message"
+              ]
+            }
+          },
+          "required": [
+            "action",
+            "parameters"
+          ]
+        }
+      }
+    }
+  ]
+}

@@ -4,6 +4,13 @@
 
 This document defines the communication protocol and role boundaries for the hierarchical MCP server system that manages the chevp workspace ecosystem.
 
+Each MCP server's communication channel is formally defined as a JSON Schema under
+[`packages/core/schemas/mcp/`](../packages/core/schemas/mcp/): one `<role>.schema.json`
+file per server, extending the shared [`_envelope.schema.json`](../packages/core/schemas/mcp/_envelope.schema.json)
+and constraining `from` (who may message it), `to` (itself), and `payload.action`
+(its own tool names) accordingly. See that directory's contract for the
+authoritative, machine-checkable version of the tool lists documented below.
+
 ---
 
 ## Communication Protocol Specification
@@ -87,7 +94,7 @@ export interface SharedContext {
 Used for immediate operations that don't require deliberation.
 
 ```typescript
-// Strategy asks Standards for architecture audit
+// StrategyMcp asks StandardsMcp for architecture audit
 const response = await standardsMcp.call('audit_architecture', {
   scope: 'coregfx',
   depth: 'shallow'
@@ -123,7 +130,7 @@ await messageQueue.send({
 Used for announcements that affect multiple MCPs.
 
 ```typescript
-// Standards announces breaking change
+// StandardsMcp announces breaking change
 await messageQueue.broadcast({
   type: 'notification',
   from: 'standards',
@@ -149,11 +156,11 @@ Level 1: Peer Resolution
     PO ↔ PO (priority conflict)
 
 Level 2: Manager Resolution
-    → Standards (technical escalation)
-    → Product (product escalation)
+    → StandardsMcp (technical escalation)
+    → ProductMcp (product escalation)
 
 Level 3: Top-Level Resolution
-    → Strategy (cross-domain, strategic)
+    → StrategyMcp (cross-domain, strategic)
 ```
 
 ---

@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.chevp-mcp-suite.dev/mcp/arctic-po.schema.json",
+  "title": "arctic-po-mcp communication channel",
+  "description": "Valid inbound MCPMessages for the 'arctic-po' MCP server: who may send them (`from`) and which of this server's tools they may invoke (`payload.action`). Extends the shared envelope in ./_envelope.schema.json.",
+  "allOf": [
+    {
+      "$ref": "./_envelope.schema.json"
+    },
+    {
+      "properties": {
+        "to": {
+          "oneOf": [
+            {
+              "const": "arctic-po"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "./roles.schema.json#/definitions/MCPRole"
+              },
+              "contains": {
+                "const": "arctic-po"
+              }
+            }
+          ]
+        },
+        "from": {
+          "enum": [
+            "arctic-architect",
+            "arctic-ba",
+            "product",
+            "standards"
+          ]
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "enum": [
+                "manage_backlog",
+                "plan_sprint",
+                "accept_feature",
+                "request_estimate",
+                "report_to_product"
+              ]
+            }
+          },
+          "required": [
+            "action",
+            "parameters"
+          ]
+        }
+      }
+    }
+  ]
+}

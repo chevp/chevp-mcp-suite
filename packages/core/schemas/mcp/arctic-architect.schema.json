@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://schemas.chevp-mcp-suite.dev/mcp/arctic-architect.schema.json",
+  "title": "arctic-architect-mcp communication channel",
+  "description": "Valid inbound MCPMessages for the 'arctic-architect' MCP server: who may send them (`from`) and which of this server's tools they may invoke (`payload.action`). Extends the shared envelope in ./_envelope.schema.json.",
+  "allOf": [
+    {
+      "$ref": "./_envelope.schema.json"
+    },
+    {
+      "properties": {
+        "to": {
+          "oneOf": [
+            {
+              "const": "arctic-architect"
+            },
+            {
+              "type": "array",
+              "items": {
+                "$ref": "./roles.schema.json#/definitions/MCPRole"
+              },
+              "contains": {
+                "const": "arctic-architect"
+              }
+            }
+          ]
+        },
+        "from": {
+          "enum": [
+            "arctic-ba",
+            "arctic-po",
+            "infra-architect",
+            "standards"
+          ]
+        },
+        "payload": {
+          "type": "object",
+          "properties": {
+            "action": {
+              "enum": [
+                "design_module",
+                "propose_refactoring",
+                "document_architecture",
+                "review_code_quality",
+                "enforce_patterns",
+                "estimate_effort",
+                "analyze_dependencies"
+              ]
+            }
+          },
+          "required": [
+            "action",
+            "parameters"
+          ]
+        }
+      }
+    }
+  ]
+}
